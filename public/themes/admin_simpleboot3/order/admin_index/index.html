@@ -1,0 +1,87 @@
+<include file="public@header"/>
+</head>
+
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{$flag}管理</a></li>
+        <!-- <li><a href="{:url('add')}">添加{$flag}</a></li> -->
+        <li><a href="{:url('add')}">测试</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+        收货人
+        <input class="form-control" type="text" name="consignee" value="{:input('request.consignee')}" placeholder=""> &nbsp; &nbsp;
+        订单号
+        <input class="form-control" type="text" name="order_sn" value="{:input('request.order_sn')}" placeholder=""> &nbsp; &nbsp;
+        下单日期
+        <input type="text" name="start" value="{:input('request.start','')}" class="form-control js-bootstrap-date"> - 
+        <input type="text" name="end" value="{:input('request.end','')}" class="form-control js-bootstrap-date"> &nbsp; &nbsp;
+        支付方式
+        <select name="payment" class="form-control">
+            {$payments|default=''}
+        </select> &nbsp; &nbsp;
+        状态
+        <select name="status" class="form-control">
+            <foreach name="statusV" item="v">
+                <option {$status==$key?='selected'} value="{$key}">{$v}</option>
+            </foreach>
+        </select> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+        <!-- 右侧 -->
+        <div class="pull-right">
+            <a href="javascript:void(0)" class="printer js-ajax-dialog-btn" data-msg="确定打印吗？" data-refresh="1" data-toggle="tooltip" title="打印"><i class="fa fa-print"></i></a>
+        </div>
+    </form>
+
+    <form method="post" class="js-ajax-form" action="{:url('listOrder')}">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>订单号</th>
+                <th>卖家</th>
+                <th>买家</th>
+                <th>产品</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>实付款</th>
+                <th>折扣</th>
+                <th>保证金</th>
+                <th>下单时间</th>
+                <th>支付时间</th>
+                <th>状态</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.order_sn}</td>
+                    <td>{$vo.seller_id}</td>
+                    <td>{$vo.buyer_id}</td>
+                    <td>{$vo.goods_id}</td>
+                    <td>{$vo.price}</td>
+                    <td>{$vo.totals}</td>
+                    <td>{$vo.amount}</td>
+                    <td>{$vo.discount}</td>
+                    <td>{$vo.deposit}</td>
+                    <td>{$vo.create_time?date('Y-m-d H:i:s',$vo.create_time):''}</td>
+                    <td>{$vo.pay_time?date('Y-m-d H:i:s',$vo.pay_time):''}</td>
+                    <td>{$statusV[$vo.status]}</td>
+                    <td>
+                        <a href="{:url('edit',['id'=>$vo.id])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                        <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> &nbsp; &nbsp;
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$pager|default=''}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

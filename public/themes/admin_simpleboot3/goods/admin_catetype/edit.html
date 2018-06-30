@@ -1,0 +1,44 @@
+<include file="public@header" />
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('index',['gameId'=>$gameId])}">{$flag}管理</a></li>
+            <li><a href="{:url('add','gameId='.$gameId)}">添加{$flag}</a></li>
+            <li class="active"><a href="javascript:void(0);">编辑{$flag}</a></li>
+        </ul>
+        <div class="row margin-top-20">
+            <div class="col-md-1">
+                <div class="list-group">
+                    <a class="list-group-item" href="#_base" data-toggle="tab">基本属性</a>
+                    <a class="list-group-item" href="#_adv" data-toggle="tab">广告设置</a>
+                    <a class="list-group-item" href="#_hot" data-toggle="tab">热搜关键词</a>
+                </div>
+            </div>
+            <form action="{:url('editPost')}" method="post" class="js-ajax-form">
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="_base">
+                            <include file="admin_catetype/_base" />
+                        </div>
+                        <div class="tab-pane" id="_adv">
+                            <include file="admin_catetype/_adv" />
+                        </div>
+                        <div class="tab-pane" id="_hot">
+                            <include file="admin_catetype/_hot" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="post[id]" value="{$post.id}">
+                        <button type="submit" class="btn btn-primary js-ajax-submit1">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

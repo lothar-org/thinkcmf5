@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请输入类型名称" required class="form-control"/>
+                    <p class="help-block">类型名称</p>
+                </td>
+            </tr>
+            <tr>
+                <th><code>CODE码</code><span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="code" value="{$code|default=''}" placeholder="" required class="form-control">
+                    <p class="help-block">URL美化、SEO。<br>只能是字母和数字，下划线_及破折号-</p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>小图标</th>
+                <td>
+                    <input type="hidden" name="icon" id="thumbnail" value="{$icon|default=''}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($icon)">
+                            <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" style="width:32px;cursor:pointer" />
+                        <else/>
+                            <img src="{:cmf_get_image_preview_url($icon)}" id="thumbnail-preview" style="width:32px;cursor:pointer" />
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+                </td>
+            </tr>
+
+            <tr>
+                <th>特定模板</th>
+                <td>
+                    <input type="text" name="template" value="{$template|default=''}" placeholder="" class="form-control"/>
+                    <p class="help-block">用于前台显示到不同的类型页面。</p>
+                </td>
+            </tr>
+            <tr>
+                <th><b>排序</b></th>
+                <td>
+                    <input type="number" name="list_order" value="{$list_order|default='10'}" placeholder="从小到大顺序" class="form-control" style="width:100px;">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

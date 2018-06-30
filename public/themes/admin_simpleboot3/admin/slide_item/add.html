@@ -1,0 +1,24 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('SlideItem/index',['slide_id'=>$slide_id])}">广告列表</a></li>
+        <li class="active"><a href="{:url('SlideItem/add',['slide_id'=>$slide_id])}">添加广告</a></li>
+    </ul>
+    <form action="{:url('SlideItem/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <include file="slide_item/add_edit" />
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="post[slide_id]" value="{$slide_id}">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                <a class="btn btn-default" href="{:url('SlideItem/index',['slide_id'=>$slide_id])}">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

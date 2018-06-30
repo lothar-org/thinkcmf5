@@ -1,0 +1,41 @@
+
+<!-- 条件筛选 -->
+<empty name="category_type">
+    <div class="syct">
+        <span>类别：</span>
+        <select name="type" id="lot-type" class="form-control iblock" style="width:105px;">
+            {$typeV|default=''}
+        </select>
+    </div>
+<else />
+    <input type="hidden" name="type" value="0" id="lot-type">
+</empty>
+
+<div class="syct">
+    <span>游戏：</span>
+    <select name="gameId" id="lot-game" class="form-control iblock">
+        <!-- <option value="null">请选择</option> -->
+        {$games|default=''}
+    </select>
+</div>
+<div id="second-disco" class="syct" style="{$seconds?'':'display:none;'}">
+    <span>二级类目：</span>
+    <select name="second" id="lot-second" class="form-control iblock" style="width:160px">
+        <empty name="seconds">
+            <option value="0">请选择</option>
+        </empty>
+            {$seconds|default=''}
+        </empty>
+    </select>
+</div>
+<div id="third-disco" class="syct" style="{$thirds?'':'display:none;'}">
+    <span>三级类目：</span>
+    <select name="third" id="lot-third" class="form-control iblock" style="width:160px">
+        <empty name="thirds">
+            <option value="0">请选择</option>
+        </empty>
+            {$thirds|default=''}
+        </empty>
+    </select>
+</div>
+<!-- <div class="clearfix"></div> -->

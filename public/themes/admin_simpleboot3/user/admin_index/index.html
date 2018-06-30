@@ -1,0 +1,224 @@
+<include file="public@header" />
+<style type="text/css">
+    .blue{color:#18BC9C}
+</style>
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <!-- <li class="active"><a>{*:lang('USER_INDEXADMIN_INDEX')*}</a></li> -->
+            <li class="active"><a>{$flag}管理</a></li>
+            <li><a href="{:url('add')}">添加{$flag}</a></li>
+        </ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('user/adminIndex/index')}">
+            <include file="admin_index/search" />
+
+            用户ID：
+            <input class="form-control" style="width:100px;" type="text" name="uid" value="{:input('request.uid')}" placeholder=""> &nbsp; &nbsp;
+            
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('user/adminIndex/index')}">清空</a>
+        </form>
+        <form method="post" class="js-ajax-form">
+            <div class="table-actions">
+                <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('userDelete')}" data-subcheck="true" data-msg="您确定删除吗？">批量删除</button>
+                <button class="btn btn-primary btn-sm js-member-copy" type="button">批量入组</button>
+                <!-- 右侧 -->
+                <div class="pull-right">
+                    <a href="#" class="btn btn-primary btn-sm js-ajax-dialog-btn" data-msg="全部入组可能有些慢">全部入组</a>
+                    <select class="form-control inline-block">
+                        <option value="1">新卖家</option>
+                        <option value="2">优惠券</option>
+                    </select>
+                    <a href="javascript:void(0)" class="printer js-ajax-dialog-btn" data-msg="确定打印吗？" data-refresh="1" data-toggle="tooltip" title="打印"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th width="15">
+                            <label>
+                                <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                            </label>
+                        </th>
+                        <th width="50">ID</th>
+                        <th>{:lang('USERNAME')}</th>
+                        <th>{:lang('NICENAME')}</th>
+                        <th>{:lang('AVATAR')}</th>
+                        <th>{:lang('EMAIL')}</th>
+                        <th>手机</th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'level');"></i> 用户等级
+                        </th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'balance');"></i> 余额 
+                            <a href="#" target="_blank" data-toggle="tooltip" title="查看余额记录"><i class="fa fa-eye"></i></a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'orders');"></i> 成功订单 
+                            <a href="#" target="_blank" data-toggle="tooltip" title="查看订单"><i class="fa fa-eye"></i></a>
+                         </th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'reviews');"></i> 总评数 
+                            <a href="#" target="_blank" data-toggle="tooltip" title="查看产品评价记录"><i class="fa fa-eye"></i></a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'negatives');"></i> 差评数
+                        </th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'rating');"></i> 信用积分 
+                            <a href="#" target="_blank" data-toggle="tooltip" title="查看信用排行榜"><i class="fa fa-eye"></i></a>
+                        </th>
+                        <th>{:lang('REGISTRATION_TIME')}</th>
+                        <th>
+                            <i class="fa fa-sort blue" onclick="fa_sort(this,'login_time');"></i>
+                             {:lang('LAST_LOGIN_TIME')} 
+                            <a href="#" target="_blank" data-toggle="tooltip" title="查看访问记录"><i class="fa fa-eye"></i></a>
+                        </th>
+                        <th>{:lang('LAST_LOGIN_IP')}</th>
+                        <th>{:lang('STATUS')}</th>
+                        <th>{:lang('ACTIONS')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="list" item="vo">
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                                       value="{$vo.id}" title="ID:{$vo.id}">
+                            </td>
+                            <td>{$vo.id}</td>
+                            <td>
+                                {$vo['username']?$vo['username']:($vo['email']?$vo['email']:lang('THIRD_PARTY_USER'))}
+                            </td>
+                            <td>{$vo['nickname']?$vo['nickname']:lang('NOT_FILLED')}</td>
+                            <td>
+                                <img width="25" height="25" src="{:url('user/public/avatar',array('id'=>$vo['id']))}" />
+                            </td>
+                            <td>
+                                <a href="mailto:{$vo.email}?subject=邮件" target="_blank" data-toggle="tooltip" title="发邮件"><i class="fa fa-eye"></i></a> {$vo.email}
+                            </td>
+                            <td>{$vo.mobile}</td>
+                            <td>
+                                <a href="#" target="_blank" data-toggle="tooltip" title="升级"><i class="fa fa-eye"></i></a> {$vo.level}
+                            </td>
+                            <td>
+                                <a href="#" target="_blank" data-toggle="tooltip" title="余额管理"><i class="fa fa-eye"></i></a> {$vo.balance}
+                            </td>
+                            <td>
+                                <a href="#" target="_blank" data-toggle="tooltip" title="查看订单"><i class="fa fa-eye"></i></a> {$vo.orders}
+                            </td>
+                            <td>{$vo.reviews}</td>
+                            <td>{$vo.negatives}</td>
+                            <td>
+                                <a href="#"><i class="fa fa-eye"></i></a> {$vo.rating}
+                            </td>
+                            <td>
+                                <notempty name="vo.reg_time">
+                                    {:date('Y-m-d H:i',$vo.reg_time)}
+                                </notempty>
+                            </td>
+                            <td>{$vo.login_time?=date('Y-m-d H:i',$vo.login_time)}</td>
+                            <td>{$vo.login_ip}</td>
+                            <td>{$member_status[$vo['status']]}</td>
+                            <td>
+                                <a href="{:url('user/Login/doLoginAdmin','uid='.$vo.id)}">登录前台</a> &nbsp; &nbsp;
+                                <a href="{:url('edit','id='.$vo.id)}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                                <neq name="vo.id" value="1">
+                                    <empty name="vo.status">
+                                        <a style="color:#F00;" href="{:url('cancelban',['id'=>$vo.id])}" class="js-ajax-dialog-btn" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                                    <else/>
+                                        <a href="{:url('adminIndex/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                                    </empty>
+                                <else/>
+                                    <a style="color: #ccc;">{:lang('BLOCK_USER')}</a>
+                                </neq>
+                            </td>
+                        </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            <div class="pagination">{$pager|default=''}</div>
+        </form>
+    </div>
+    <script src="__STATIC__/js/admin.js"></script>
+    <script type="text/javascript"> 
+        function reloadPage(win) {
+            win.location.reload();
+        }
+
+        // 排序
+        function fa_sort(o,type) {
+            // alert('type')
+            console.log(type)
+            $(o).toggleClass('blue');
+        }
+
+        $(function () {
+            // $("#category").select2();//页面加载完成后初始化select2控件 
+
+            setCookie("refersh_time", 0);
+
+            Wind.use('ajaxForm', 'artDialog', 'iframeTools', function () {
+                //批量复制
+                $('.js-member-copy').click(function (e) {
+                    var ids = [];
+                    $("input[name='ids[]']").each(function () {
+                        if ($(this).is(':checked')) {
+                            ids.push($(this).val());
+                        }
+                    });
+
+                    if (ids.length == 0) {
+                        art.dialog.through({
+                            id: 'error',
+                            icon: 'error',
+                            content: '您没有勾选信息，无法进行操作！',
+                            cancelVal: '关闭',
+                            cancel: true
+                        });
+                        return false;
+                    }
+
+                    ids = ids.join(',');
+                    var url = "{:url('user/AdminIndex/copy', '', false)}";// /user/admin_index/copy
+                    art.dialog.open(url+'/ids/'+ids, {
+                        title: "批量复制",
+                        width: "300px"
+                    });
+                });
+
+                //批量移动
+                $('.js-member-move').click(function (e) {
+                    var ids = [];
+                    $("input[name='ids[]']").each(function () {
+                        if ($(this).is(':checked')) {
+                            ids.push($(this).val());
+                        }
+                    });
+
+                    if (ids.length == 0) {
+                        art.dialog.through({
+                            id: 'error',
+                            icon: 'error',
+                            content: '您没有勾选信息，无法进行操作！',
+                            cancelVal: '关闭',
+                            cancel: true
+                        });
+                        return false;
+                    }
+
+                    ids = ids.join(',');
+                    art.dialog.open("__ROOT__/index.php?g=portal&m=AdminArticle&a=move&old_term_id={$term.term_id|default=0}&ids=" + ids, {
+                        title: "批量移动",
+                        width: "300px"
+                    });
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>

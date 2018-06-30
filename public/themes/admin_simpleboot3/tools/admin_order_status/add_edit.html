@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请输入状态名称" required class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <th>动作</th>
+                <td>
+                    <input type="text" name="action" value="{$action|default=''}" placeholder="" maxlength="50" class="form-control">
+                    <p class="help-block">请制定动作。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>超时设定</th>
+                <td>
+                    <input type="text" name="overtime" value="{$overtime?=date('Y-m-d H:i:s',$overtime)}" placeholder="" class="form-control js-bootstrap-datetime"/>
+                </td>
+            </tr>
+            <tr>
+                <th>超前时间</th>
+                <td>
+                    <input type="text" name="ahead_time" value="{$ahead_time?=date('Y-m-d H:i:s',$ahead_time)}" placeholder="" class="form-control js-bootstrap-datetime"/>
+                    <p class="help-block">超时前系统提醒时间。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>超时前提醒方式</th>
+                <td>
+                    <input type="number" name="notice_method" value="{$notice_method|default='1'}" placeholder="0.0000" class="form-control"/>
+                    <p class="help-block">超时前提醒方式： 1系统消息 、 2邮件 、 3系统消息+邮件。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>提醒内容：</th>
+                <td>
+                    <textarea rows="5" class="form-control" name="content" placeholder="提前提醒的内容"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th><b>状态</b></th>
+                <td>
+                    <div>
+                        <select name="status" class="form-control">
+                            {$orderStatus}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

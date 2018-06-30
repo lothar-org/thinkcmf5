@@ -1,0 +1,58 @@
+<include file="public@header" />
+</head>
+<body>
+
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('index')}">数据备份列表</a></li>
+			<li><a href="{:url('add')}">新数据备份</a></li>
+			<li><a href="{:url('query')}">sql语句</a></li>
+		 
+		</ul>
+		<form method="post" class="js-ajax-form margin-top-20" action="{:url('dels')}">
+
+			<div class="table-actions">
+				<button type="submit" class="btn btn-primary btn-sm js-ajax-submit">删除</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label> <input type="checkbox"
+								class="js-check-all" data-direction="x"
+								data-checklist="js-check-x">
+						</label></th>
+						<th>备份文件名</th>
+
+						<th>操作</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="list" item="vo">
+					<tr>
+						<td><input type="checkbox" class="js-check"
+							data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+							value="{$vo}"></td>
+
+						<td>{$vo}</td>
+
+						<td><a href="{:url('restore',array('id'=>$vo))}">还原备份</a>
+							&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+							
+							<a href="/data/{$vo}">下载</a>
+							&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a
+							class="js-ajax-delete" href="{:url('del',array('id'=>$vo))}"
+							data-msg="确认删除吗？">删除</a></td>
+
+					</tr>
+					</foreach>
+				</tbody>
+
+			</table>
+
+		</form>
+	 
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

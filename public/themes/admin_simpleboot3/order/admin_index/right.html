@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+    <tr>
+        <th width="100">下单时间</th>
+        <td>
+            <p class="form-control">{$order.create_time?date('Y-m-d H:i:s',$order.create_time):''}</p>
+        </td>
+    </tr>
+    <tr>
+        <th>支付时间</th>
+        <td>
+            <input name="order[pay_time]" value="{$order.pay_time?date('Y-m-d H:i:s',$order.pay_time):''}" class="form-control">
+        </td>
+    </tr>
+    <tr>
+        <th>完成时间</th>
+        <td>
+            <input name="order[finish_time]" value="{$order.finish_time?date('Y-m-d H:i:s',$order.finish_time):''}" class="form-control">
+            <!-- <p class="form-control">{$order.finish_time?date('Y-m-d H:i:s',$order.finish_time):''}</p> -->
+        </td>
+    </tr>
+
+    <tr>
+        <th>状态</th>
+        <td>
+            <select name="order[status]" class="form-control">
+                {$statusV|default=''}
+            </select>
+        </td>
+    </tr>
+</table>

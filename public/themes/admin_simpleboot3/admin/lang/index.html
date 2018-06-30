@@ -1,0 +1,50 @@
+<include file="public@header" />
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a>{$flag}管理</a></li>
+            <li><a href="{:url('add')}">添加{$flag}</a></li>
+        </ul>
+        <form method="post" class="js-ajax-form" action="">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th width="50">ID</th>
+                        <th>语言名称</th>
+                        <th>语言代码</th>
+                        <th>图标</th>
+                        <th>{:lang('STATUS')}</th>
+                        <th>{:lang('ACTIONS')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="list" item="vo">
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.code}</td>
+                            <td><img width="25" height="25" src="{:cmf_get_image_preview_url($vo.icon)}" onclick="parent.imagePreviewDialog(this.src);" /></td>
+                            <td>
+                                <empty name="vo.status">
+                                    <a data-toggle="tooltip" title="关闭"><i style="color:#F00" class="fa fa-close"></i></a>
+                                    <else/>
+                                    <a data-toggle="tooltip" title="开启"><i class="fa fa-check"></i></a>
+                                </empty>
+                            </td>
+                            <td>
+                                <a href="{:url('edit','id='.$vo.id)}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                                <a href="{:url('delete',['id'=>$vo.id])}">{:lang('DELETE')}</a>
+                            </td>
+                        </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            <div class="pagination">{$pager|default=''}</div>
+        </form>
+    </div>
+    <script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

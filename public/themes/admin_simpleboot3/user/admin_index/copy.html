@@ -1,0 +1,37 @@
+<include file="public@header" />
+</head>
+
+<body>
+    <div class="wrap">
+        <form method="post" action="" class="js-ajax-form">
+            <!-- <div class="form-group">
+                <label for="input-term_id" class="col-sm-2 control-label">成员组：</label>
+                <div class="col-md-6 col-sm-10">
+                    <select name="term_id" id="input-term_id" class="form-control">
+                        
+                    </select>
+                </div>
+            </div> -->
+
+            <table class="table table-bordered">
+            	<tr>
+            		<th width="70">成员组</th>
+            		<td>
+	                    <select name="term_id" id="input-term_id" class="form-control">
+	                        {$terms_tree|default=''}
+	                    </select>
+            		</td>
+            	</tr>
+            </table>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="hidden" name="ids" value="{$ids|default=''}">
+                    <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">确定</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

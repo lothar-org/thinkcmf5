@@ -1,0 +1,66 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{$flag}管理</a></li>
+        <!-- <li><a href="{:url('add')}">添加{$flag}</a></li> -->
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+        关键词：
+        <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}"
+               placeholder="用户名">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+    </form>
+    <form method="post" class="js-ajax-form" action="{:url('listOrder')}">
+        <div class="table-actions">
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('delete')}" data-subcheck="true" data-msg="您确定删除吗？">删除</button>
+        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>用户</th>
+                <th>URL</th>
+                <th>创建时间</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>【{$vo.member_id}】{$vo.username}</td>
+                    <td>{$vo.url}</td>
+                    <td>{$vo['create_time']?date('Y-m-d H:i:s',$vo['create_time']):lang('NOT_FILLED')}</td>
+                    <td>
+                        <empty name="vo.status">
+                            <a data-toggle="tooltip" title="关闭"><i style="color:#F00" class="fa fa-close"></i></a>
+                        <else/>
+                            <a data-toggle="tooltip" title="开启"><i class="fa fa-check"></i></a>
+                        </empty>
+                    </td>
+                    <td>
+                        <!-- <a href="{:url('edit','id='.$vo.id)}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                        <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> -->
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$pager|default=''}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

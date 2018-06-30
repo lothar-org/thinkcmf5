@@ -1,0 +1,113 @@
+<foreach name="list" item="vo">
+<php>$count = count($vo['children']);</php>
+<tr>
+    <td><input name='list_orders[{$vo.id}]' type='text' size='3' value='{$vo.list_order}' class='input-order'></td>
+    <td>{$vo.id}</td>
+    <td>
+        <eq name="vo.level" value="0">▉▉▉<else/>{$typeV[$vo.type]}</eq>
+    </td>
+    <td><a>{$vo.name}</a>{$count?='（'.$count.'）'}</td>
+    <td>{$vo.code}</td>
+    <td>{$vo.gindex}</td>
+    <td>{$vo.unit}</td>
+    <td>
+        <a href="javascript:parent.imagePreviewDialog('{:cmf_get_image_preview_url($vo.thumbnail)}');"><i class="fa fa-photo fa-fw"></i></a>
+    </td>
+    <td>
+        <empty name="vo.is_hot">
+            <a style="color:#CCC" data-toggle="tooltip" title="未推荐"><i class="fa fa-thumbs-down"></i></a>
+         <else/>
+            <a data-toggle="tooltip" title="已推荐"><i class="fa fa-thumbs-up"></i></a>
+        </empty>
+        <empty name="vo.status">
+            <a style="color:#F00" data-toggle="tooltip" title="隐藏"><i class="fa fa-close"></i></a>
+        <else/>
+            <a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>
+        </empty>
+    </td>
+    <td>
+        <a href="{:url('add',['parent'=>$vo.id])}">添加子项</a> &nbsp; &nbsp;
+        <a href="{:url('edit',['id'=>$vo.id])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+        <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> &nbsp; &nbsp;
+        <empty name="vo.level">
+            <a target="_blank" href="{:url('AdminCatetype/index', ['gameId' => $vo['id']])}">{:lang('VIEW')}关联</a>
+        </empty>
+    </td>
+</tr>
+<notempty name="count">
+    <foreach name="vo.children" item="child">
+    <php>$count = count($child['children']);</php>
+    <tr>
+        <td><input name="list_orders[{$child.id}]" type="text" size="3" value="{$child.list_order}" class="input-order"></td>
+        <td>{$child.id}</td>
+        <td>
+            <eq name="child.level" value="0">▉▉▉<else/>{$typeV[$child.type]}</eq>
+        </td>
+        <td>
+            {$key==$count-1?'&nbsp;&nbsp;└─':'&nbsp;&nbsp;├─'}
+            <a>{$child.name}</a>
+        </td>
+        <td>{$child.code}</td>
+        <td>{$child.gindex}</td>
+        <td>{$child.unit}</td>
+        <td>--</td>
+        <td>
+            <empty name="child.is_hot">
+                <a data-toggle="tooltip" title="未推荐"><i style="color:#CCC" class="fa fa-thumbs-down"></i></a>
+             <else/>
+                <a data-toggle="tooltip" title="已推荐"><i class="fa fa-thumbs-up"></i></a>
+            </empty>
+            <empty name="child.status">
+                <a data-toggle="tooltip" title="隐藏"><i style="color:#F00" class="fa fa-close"></i></a>
+            <else/>
+                <a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>
+            </empty>
+        </td>
+        <td>
+            <a href="{:url('add',['parent'=>$child.id])}">添加子项</a> &nbsp; &nbsp;
+            <a href="{:url('edit',['id'=>$child.id])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+            <a href="{:url('delete',['id'=>$child.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> &nbsp; &nbsp;
+            <empty name="child.level">
+                <a target="_blank" href="{:url('AdminCatetype/index', ['gameId' => $child['id']])}">{:lang('VIEW')}关联</a>
+            </empty>
+        </td>
+    </tr>
+    <notempty name="count">
+        <foreach name="child.children" item="third">
+        <tr>
+            <td><input name="list_orders[{$third.id}]" type="text" size="3" value="{$third.list_order}" class="input-order"></td>
+            <td>{$third.id}</td>
+            <td>
+                <eq name="third.level" value="0">▉▉▉<else/>{$typeV[$third.type]}</eq>
+            </td>
+            <td>
+                &nbsp;&nbsp;│{$key==$count-1?'&nbsp;&nbsp;└─':'&nbsp;&nbsp;├─'}
+                <a>{$third.name}</a>
+            </td>
+            <td>{$third.code}</td>
+            <td>{$third.gindex}</td>
+            <td>{$third.unit}</td>
+            <td>--</td>
+            <td>
+                <empty name="third.is_hot">
+                    <a data-toggle="tooltip" title="未推荐"><i style="color:#CCC" class="fa fa-thumbs-down"></i></a>
+                 <else/>
+                    <a data-toggle="tooltip" title="已推荐"><i class="fa fa-thumbs-up"></i></a>
+                </empty>
+                <empty name="third.status">
+                    <a data-toggle="tooltip" title="隐藏"><i style="color:#F00" class="fa fa-close"></i></a>
+                <else/>
+                    <a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>
+                </empty>
+            </td>
+            <td>
+                <a href="{:url('add',['parent'=>$third.id])}">添加子项</a> &nbsp; &nbsp;
+                <a href="{:url('edit',['id'=>$third.id])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                <a href="{:url('delete',['id'=>$third.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> &nbsp; &nbsp;
+            </td>
+        </tr>
+        </foreach>
+    </notempty>
+    </foreach>
+</notempty>
+</foreach>

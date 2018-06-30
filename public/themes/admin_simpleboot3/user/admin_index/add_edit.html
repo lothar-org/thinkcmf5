@@ -1,0 +1,265 @@
+<style type="text/css">
+    .img-ctrl{cursor:pointer;max-width:200px;max-height:32px;}
+</style>
+<div class="tab-pane active" id="_base">
+    <table class="table table-bordered">
+        <tr>
+            <th width="100">用户名<span class="form-required">*</span></th>
+            <td>
+                <input type="text" name="post[username]" value="{$post.username|default=''}" placeholder="请输入用户名" required class="form-control" />
+                <p class="help-block">前台登录账号</p>
+            </td>
+        </tr>
+        <tr>
+            <th>密码</th>
+            <td>
+                <input type="text" name="post[password]" value="" placeholder="******" minlength="6" maxlength="32" class="form-control">
+                <p class="help-block">最少6位数，最多32位。<span>超管请慎重操作！</span></p>
+            </td>
+        </tr>
+        <tr>
+            <th>昵称</th>
+            <td>
+                <input type="text" name="post[nickname]" value="{$post.nickname|default=''}" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th>邮箱<span class="form-required">*</span></th>
+            <td>
+                <input type="email" name="post[email]" value="{$post.email|default=''}" placeholder="your@xx.xx" required class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th>手机号</th>
+            <td>
+                <input type="text" name="post[mobile]" value="{$post.mobile|default=''}" placeholder="" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th>认证模型</th>
+            <td>
+                <select name="post[verifys][]" multiple id="verifys" class="form-control" style="width:70%">
+                    {$verifys|default=''}
+                </select>
+                <input type="hidden" id="hf_verifys">
+            </td>
+        </tr>
+        <tr>
+            <th>账户来源</th>
+            <td><p class="form-control">{$post.source|default=''}</p></td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th>信用度</th>
+            <td>总评价数：{$post.reviews|default=''}</td>
+            <td>好评数：{$post.positives|default=''}</td>
+            <td>差评数：{$post.negatives|default=''}</td>
+            <td>信用积分：{$post.rating|default=''}</td>
+        </tr>
+        <tr>
+            <th width="100">综合信息</th>
+            <td>账户余额：{$post.balance|default=''}</td>
+            <td>用户等级：{$post.level|default=''} <a href="#" data-toggle="tooltip" title="升级"><i style="color:#F00;font-size:20px;font-weight:bold;" class="fa fa-level-up"></i></a></td>
+            <td>成功订单数：{$post.orders|default=''}</td>
+        </tr>
+    </table>
+</div>
+<div class="tab-pane " id="_more">
+    <table class="table table-bordered">
+        <tr>
+            <th width="80">姓氏</th>
+            <td>
+                <input type="text" name="info[first_name]" value="{$post.first_name|default=''}" class="form-control">
+            </td>
+            <th width="80">名字</th>
+            <td>
+                <input type="text" name="info[last_name]" value="{$post.last_name|default=''}" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th>国家</th>
+            <td>
+                <input type="text" name="info[country]" value="{$post.country|default=''}" class="form-control">
+            </td>
+            <th>省份</th>
+            <td>
+                <input type="text" name="info[province]" value="{$post.province|default=''}" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th>城市</th>
+            <td>
+                <input type="text" name="info[city]" value="{$post.city|default=''}" class="form-control">
+            </td>
+            <th>详细地址</th>
+            <td>
+                <input type="text" name="info[address]" value="{$post.address|default=''}" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th>邮编</th>
+            <td>
+                <input type="text" name="info[postcode]" value="{$post.postcode|default=''}" class="form-control">
+            </td>
+            <th>生日</th>
+            <td>
+                <input type="text" name="info[birthday]" value="{$post.birthday?=date('Y-m-d',$post.birthday)}" class="form-control js-bootstrap-date">
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="tab-pane " id="_shop">
+    <table class="table table-bordered">
+        <p class="help-block"><a><big><b>主页</b></big></a></p>
+        <tr>
+            <th width="80">banner图</th>
+            <td>
+                <input type="hidden" name="info[banner]" value="{$post.banner|default=''}" id="imgctrl1">
+                <a href="javascript:uploadOneImage('图片上传','#imgctrl1');">
+                    <if condition="empty($post.banner)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="imgctrl1-preview" class="img-ctrl" />
+                    <else/>
+                        <img src="{:cmf_get_image_preview_url($post.banner)}" id="imgctrl1-preview" class="img-ctrl" />
+                    </if>
+                </a>
+            </td>
+            <th width="80">促销横幅</th>
+            <td>
+                <input type="hidden" name="info[promote_banner]" value="{$post.promote_banner|default=''}" id="imgctrl2">
+                <a href="javascript:uploadOneImage('图片上传','#imgctrl2');">
+                    <if condition="empty($post.promote_banner)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="imgctrl2-preview" class="img-ctrl" />
+                    <else/>
+                        <img src="{:cmf_get_image_preview_url($post.promote_banner)}" id="imgctrl2-preview" class="img-ctrl" />
+                    </if>
+                </a>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th width="80">店铺描述</th>
+            <td>
+                <textarea class="form-control" rows="3" name="info[signature]">{$post.signature|default=''}</textarea>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th width="80">喜欢游戏</th>
+            <td>
+                <input type="text" name="info[games]" value="{$post.games|default=''}" class="form-control">
+            </td>
+            <th width="80">性别</th>
+            <td>
+                <select name="info[sex]" class="" style="width:100px;height:32px;">
+                    {$sexs|default=''}
+                </select>
+                 &nbsp; 性别Gender，0保密 1男 2女
+            </td>
+        </tr>
+        <tr>
+            <th>职业</th>
+            <td>
+                <input type="text" name="info[job]" value="{$post.job|default=''}" class="form-control">
+                <p class="help-block">职业occupation</p>
+            </td>
+            <th>Twich频道</th>
+            <td>
+                <input type="text" name="info[twich]" value="{$post.twich|default=''}" class="form-control">
+                <p class="help-block">最喜爱的Twich频道Favorite Twich Channel</p>
+            </td>
+        </tr>
+        <tr>
+            <th>游戏论坛</th>
+            <td>
+                <input type="text" name="info[forum]" value="{$post.forum|default=''}" class="form-control">
+                <p class="help-block">最喜爱的游戏论坛Favorite Gaming Forum</p>
+            </td>
+            <th>兴趣爱好</th>
+            <td>
+                <input type="text" name="info[hobby]" value="{$post.hobby|default=''}" class="form-control">
+                <p class="help-block">兴趣爱好 Interests。选择框从配置文件中获取。</p>
+            </td>
+        </tr>
+        <tr>
+            <th>学历</th>
+            <td>
+                <input type="text" name="info[education]" value="{$post.education|default=''}" class="form-control">
+                <p class="help-block">最喜爱的游戏论坛Favorite Gaming Forum</p>
+            </td>
+            <th></th>
+            <td>
+                
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <p class="help-block"><a><big><b>信用度</b></big></a>这个具体怎么弄？</p>
+        <tr>
+            <th>宝贝与描述相符</th>
+            <td>
+                <input type="text" name="info[seller_described]" value="{$post.seller_described|default=''}" class="form-control">
+                <p class="help-block">卖家评级：宝贝与描述相符。星星+数值</p>
+            </td>
+        </tr>
+        <tr>
+            <th>卖家发货速度</th>
+            <td>
+                <input type="text" name="info[seller_guarantee]" value="{$post.seller_guarantee|default=''}" class="form-control">
+                <p class="help-block">卖家评级：卖家发货速度，在保证期内交货。星星+数值</p>
+            </td>
+        </tr>
+        <tr>
+            <th>卖家服务态度</th>
+            <td>
+                <input type="text" name="info[seller_communication]" value="{$post.seller_communication|default=''}" class="form-control">
+                <p class="help-block">卖家评级：卖家服务态度。星星+数值</p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- <script type="text/javascript">
+//编辑器路径定义
+var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script> -->
+<script type="text/javascript">
+$(function() {
+    // editorcontent = new baidu.editor.ui.Editor();
+    // editorcontent.render('content');
+    // try {
+    //     editorcontent.sync();
+    // } catch (err) {}
+
+    $('.btn-cancel-thumbnail').click(function() {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+});
+</script>
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/js/multiselect/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/js/multiselect/jquery-ui.css" />
+<script type="text/javascript" src="__STATIC__/js/multiselect/jquery-ui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/multiselect/jquery.multiselect.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#verifys").multiselect({
+            header: false,
+            height: 200,
+            minWidth: 200,
+            selectedList: 10, //预设值最多显示10被选中项
+            hide: ["explode", 500],
+            noneSelectedText: 'Please select an option',
+            close: function() {
+                var values = $("#verifys").val();
+                $("#hf_verifys").val(values);
+            }
+        });
+    });
+</script>

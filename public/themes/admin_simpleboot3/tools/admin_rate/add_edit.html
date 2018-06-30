@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请输入货币名称" required class="form-control" />
+                    <p class="help-block">货币名称</p>
+                </td>
+            </tr>
+            <tr>
+                <th>货币代码<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="code" value="{$code|default=''}" placeholder="" required class="form-control">
+                    <p class="help-block">用于标识识别不同种类货币。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>货币符号<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="symbol" value="{$symbol|default=''}" placeholder="" required class="form-control"/>
+                </td>
+            </tr>
+            <tr>
+                <th>汇率</th>
+                <td>
+                    <input type="text" name="rate" value="{$rate|default=''}" placeholder="0.0000" class="form-control"/>
+                    <p class="help-block">相对美元来设定的。格式：0.0000</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th><b>排序</b></th>
+                <td>
+                    <input type="number" name="list_order" value="{$list_order|default='10'}" placeholder="从小到大顺序" style="text-align: center;" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th><b>状态</b></th>
+                <td>
+                    <input type="checkbox" name="status" value="1" {$status?='checked'} class="form-control" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

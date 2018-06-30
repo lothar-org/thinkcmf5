@@ -1,0 +1,25 @@
+<include file="public@header" />
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('index')}">{$flag}管理</a></li>
+            <li><a href="{:url('add')}">添加{$flag}</a></li>
+            <li class="active"><a href="javascript:void(0);">编辑{$flag}</a></li>
+        </ul>
+        <form action="{:url('editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+            <include file="admin_category/add_edit" />
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="hidden" name="fmw[id]" value="{$id}">
+                    <button type="submit" class="btn btn-primary js-ajax-submit1">{:lang('SAVE')}</button>
+                    <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    <a class="btn btn-danger" href="{:url('add',['parent'=>$id])}">继续添加</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

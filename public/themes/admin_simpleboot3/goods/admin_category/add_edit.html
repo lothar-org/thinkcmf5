@@ -1,0 +1,201 @@
+<style type="text/css">
+    .syct{float:left;margin-right:8px;}
+    .iblock{display:inline-block;}
+</style>
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-bordered">
+            <php>$type = isset($type)?$type:0;</php>
+            <input type="hidden" name="fmw[parent_id]" value="{$parent_id|default=''}">
+            <tr>
+                <th>上级</th>
+                <td>
+                    <include file="admin_category/linkage" />
+                    <div class="clearfix"></div>
+                    <p class="help-block">拆分为联动或者使用带筛选的选择框插件，比如select2。</p>
+                </td>
+            </tr>
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="cate[name]" value="{$name|default=''}" placeholder="请填写名称" required id="input-name" class="form-control syct" style="width:20%;">
+                    <div id="dooms-disco" style="{$dooms?'':'display:none'}">
+                        <!-- multiple -->
+                        <select name="fmw[next_id]" id="lot-dooms" class="form-control" style="width:25%;">
+                            {$dooms|default=''}
+                        </select>
+                        <p class="help-block">这里考虑做多选或全选。</p>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- <input type="button" id="namebut" value="取值"> -->
+                    <p class="help-block">游戏(服务器/游戏区/派别) &nbsp; 或 &nbsp; 分类(枪支弹药/坐骑/)</p>
+                </td>
+            </tr>
+
+
+            <empty name="parentId">
+            <tr>
+                <th><code>CODE码</code></th>
+                <td>
+                    <input type="text" name="fmw[code]" value="{$code|default=''}" id="input-code" class="form-control" style="width:200px;" />
+                    <p class="help-block">URL美化、SEO。例如：League of Legends 优化成 lol。<br>只能是字母和数字，下划线_及破折号-。<br>如果未填写，则系统按一定规则自动生成。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>基本单位</th>
+                <td>
+                    <input type="text" name="cate[unit]" value="{$unit|default=''}" class="form-control" style="width:200px;" />
+                    <p class="help-block">基本货币单位：K、M。 继承上级。</p>
+                </td>
+            </tr>
+            </empty>
+
+
+            <tr>
+                <th>SEO标题</th>
+                <td>
+                    <input type="text" name="cate[seo_title]" value="{$seo_title|default=''}" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <th>SEO关键词</th>
+                <td>
+                    <input type="text" name="cate[seo_keywords]" value="{$seo_keywords|default=''}" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <th>SEO描述</th>
+                <td>
+                    <textarea rows="5" class="form-control" name="cate[seo_description]">{$seo_description|default=''}</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th>主题图</th>
+                <td align="center">
+                    <input type="hidden" name="cate[thumbnail]" id="thumbnail" value="{$thumbnail|default=''}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($thumbnail)">
+                            <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" style="width:135px;cursor:pointer" />
+                        <else/>
+                            <img src="{:cmf_get_image_preview_url($thumbnail)}" id="thumbnail-preview" style="width:135px;cursor:pointer" />
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+                </td>
+            </tr>
+            <php>
+                $status = isset($status)?$status:1;
+            </php>
+            <tr>
+                <th>是否热门</th>
+                <td>
+                    <input type="checkbox" name="cate[is_hot]" value="1" {$is_hot?='checked'} class="form-control" style="width:100px;" />
+                    <p class="help-block">这个针对游戏的</p>
+                </td>
+            </tr>
+            <tr>
+                <th><b>状态</b></th>
+                <td>
+                    <label><input type="radio" name="fmw[status]" value="1" {$status==1?='checked'} /> 开启</label> &nbsp; &nbsp;
+                    <label><input type="radio" name="fmw[status]" value="0" {$status==0?='checked'} /> 关闭</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<include file="admin_category/select2" />
+<script type="text/javascript">
+$(function() {
+    $('#namebut').click(function() {
+        var n = $('#lot-dooms').val();
+        var m = $('#lot-dooms option:selected').text();
+        alert(n+"\n"+m)
+    })
+
+
+    $('.btn-cancel-thumbnail').click(function() {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+
+
+    $('#lot-dooms').select2({
+        placeholder:'从库中筛选',
+        minimumResultsForSearch:10
+    });
+    
+    $('#lot-dooms').change(function(){
+        // var val = $(this).val();
+        var val = this.options[this.selectedIndex].text;
+        if (val=='从库中筛选') {
+            $('#input-name').val('');
+        } else {
+            $('#input-name').val(val);
+        }
+    });
+
+
+    $('#gameId').change(function(){
+        doom_hide();
+        // loupdoom('gameId');
+        loupcode();
+    });
+    // 通常在这一级出现多对多
+    $('#second').change(function(){
+        loupdoom('second');
+        loupcode();
+    });
+    $('#third').change(function(){
+        doom_hide();
+        loupcode();
+    });
+});
+
+
+
+function doom_hide() {
+    $('#lot-dooms').html('');
+    $('#dooms-disco').hide();
+    // $('#input-name').val('');
+}
+
+function loupdoom(id) {
+    var val = $('#'+id).val();
+    var type = $('#type').val();
+    $.ajax({
+        url: "{:url('ajaxDooms')}",
+        type: 'GET',
+        dataType: 'JSON',
+        data: {p: val, type: type},
+    })
+    .done(function(data) {
+        // console.log(data);
+        if (data) {
+            $('#lot-dooms').html(data);
+            $('#dooms-disco').show();
+        } else {
+            $('#lot-dooms').html('');
+            $('#dooms-disco').hide();
+        }
+    })
+    .fail(function() {
+        // console.log("error");
+    });
+}
+
+function loupcode() {
+    $.ajax({
+        url:"{:url('ajaxCode')}",
+        type: 'GET',
+        // dataType: 'JSON',
+        data: {},
+        success:function (data) {
+            // $('#input-code').val(data)
+        }
+    });
+}
+</script>

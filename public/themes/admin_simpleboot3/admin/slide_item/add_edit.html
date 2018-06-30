@@ -1,0 +1,85 @@
+<style type="text/css">
+    .se-strong{width:400px;}
+    .thumb{cursor:pointer;height:64px}
+</style>
+<div class="col-md-9">
+    <table class="table table-bordered">
+        <php>
+            $target = isset($result['target'])?$result['target']:'';
+            $stype = isset($result['stype'])?$result['stype']:'';
+        </php>
+        <tr>
+            <th><span class="form-required">*</span>标题</th>
+            <td>
+                <input type="text" name="post[title]" value="{$result.title|default=''}" required class="form-control se-strong" placeholder="请输入标题" />
+            </td>
+        </tr>
+        <tr>
+            <th>链接</th>
+            <td>
+                <input type="url" name="post[url]" value="{$result.url|default=''}" class="form-control se-strong" placeholder="请输入链接">
+            </td>
+        </tr>
+        <tr>
+            <th>打开方式</th>
+            <td>
+                <select name="target" class="form-control se-strong">
+                    <foreach name="targets" item="vo">
+                        <option {$target==$key?='selected'} value="{$key}">{$vo}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>描述</th>
+            <td>
+                <input type="text" name="post[description]" value="{$result.description|default=''}" class="form-control se-strong" placeholder="请输入描述">
+            </td>
+        </tr>
+
+        <tr>
+            <th>媒介类型</th>
+            <td>
+                <select name="stype" class="form-control se-strong" id="stype">
+                    <option {$stype==1?='selected'} value="1">图片</option>
+                    <option {$stype==2?='selected'} value="2">flash</option>
+                    <option {$stype==4?='selected'} value="4">文字</option>
+                </select>
+            </td>
+        </tr>
+
+        <!-- 1图片 -->
+        <tr id="stype1">
+            <th>图片</th>
+            <td>
+                <input type="hidden" name="post[more][img]" id="thumb" value="{$result.more.img|default=''}">
+                <a href="javascript:uploadOneImage('图片上传','#thumb');">
+                    <empty name="result.more.img">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumb-preview" class="thumb" />
+                    <else />
+                        <img src="{:cmf_get_image_preview_url($result['image'])}" id="thumb-preview" class="thumb" />
+                    </empty>
+                </a>
+                <input type="button" class="btn btn-sm" onclick="$('#thumb-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+            </td>
+        </tr>
+        <!-- 2flash -->
+        <tr id="stype2"></tr>
+        <!-- 3代码 不开启 -->
+        <tr id="stype3"></tr>
+        <!-- 4文字 -->
+        <tr id="stype4">
+            <th>幻灯片内容</th>
+            <td>
+                <textarea class="form-control" name="post[more][text]" style="width: 47%; height:100px;">{$result.more.content|default=''}</textarea>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    $('#stype').change(function() {
+        var s = $(this).val();
+        var n = [1,2,3,4];
+
+    })
+</script>

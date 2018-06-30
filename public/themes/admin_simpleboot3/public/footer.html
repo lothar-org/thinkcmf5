@@ -1,0 +1,24 @@
+
+<div id="news_clock">
+    <php>c2c_get_news('',true);</php>
+</div>
+
+<script type="text/javascript">
+    // 定时执行
+    // var int = self.setInterval("clock()",60*1000);
+
+    function clock()
+    {
+        $.ajax({
+            url: "{:url('index/Ajax/news')}",
+            data: {},
+            type: "POST",
+            success:function(CallBack) {
+                $('#news_clock').html('').append(CallBack);
+                // $('#news_clock').append('11');
+            }
+        })
+    }
+    // int=window.clearInterval(int);
+    // reloadPage();
+</script>

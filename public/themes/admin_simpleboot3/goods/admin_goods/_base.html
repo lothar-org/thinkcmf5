@@ -1,0 +1,159 @@
+<table class="table table-bordered">
+    <tr>
+        <th>所属游戏</th>
+        <td>
+            <select name="goods[game_id]" class="form-control" style="width:300px;" id="lot-game">
+                {$games|default=''}
+            </select>
+        </td>
+        <th>产品类型</th>
+        <td>
+            <select name="goods[type_id]" class="form-control" style="width:300px;" id="lot-type">
+                {$types|default=''}
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <th width="100">产品名称<span class="form-required">*</span></th>
+        <td>
+            <input type="text" name="goods[name]" value="{$goods.name|default=''}" placeholder="产品名称" required class="form-control">
+        </td>
+        <th width="100">保证金</th>
+        <td>
+            <input type="text" name="goods[deposit]" value="{$goods.deposit|default=''}" placeholder="担保金额" class="form-control" />
+        </td>
+    </tr>
+
+    <php>
+        $is_auto = isset($is_auto)?$is_auto:0;
+        $is_quality = isset($is_quality)?$is_quality:0;
+        $is_expiry = isset($is_expiry)?$is_expiry:0;
+    </php>
+    <tr>
+        <th>发货速度</th>
+        <td>
+            <input type="text" name="goods[delivery_speed]" value="{$goods.delivery_speed|default='--'}" placeholder="" class="form-control" />
+        </td>
+        <th>自动发货</th>
+        <td>
+            <label><input type="radio" name="goods[is_auto]" value="1" {$is_auto==1?='checked'} /> 是 &nbsp; &nbsp;</label>
+            <label><input type="radio" name="goods[is_auto]" value="0" {$is_auto==0?='checked'} > 否 &nbsp; &nbsp;</label>
+        </td>
+    </tr>
+
+    <tr>
+        <th>是否质保</th>
+        <td>
+            <label><input type="radio" name="goods[is_quality]" value="1" {$is_quality==1?='checked'} /> 是 &nbsp; &nbsp;</label>
+            <label><input type="radio" name="goods[is_quality]" value="0" {$is_quality==0?='checked'} > 否 &nbsp; &nbsp;</label>
+            <p class="help-block">是否对产品质保</p>
+        </td>
+        <th>质保时间</th>
+        <td>
+            <input type="text" name="goods[quality_time]" value="{$goods.quality_time?date('Y-m-d H:i',$goods.quality_time):'--'}" placeholder="" class="form-control" />
+            <p class="help-block">质保时间（天）</p>
+        </td>
+    </tr>
+    <tr>
+        <th>是否有效期</th>
+        <td>
+            <label><input type="radio" name="goods[is_expiry]" value="1" {$is_expiry==1?='checked'} /> 是 &nbsp; &nbsp;</label>
+            <label><input type="radio" name="goods[is_expiry]" value="0" {$is_expiry==0?='checked'} > 否 &nbsp; &nbsp;</label>
+            <p class="help-block">产品是否存在有效期</p>
+        </td>
+        <th>有效期</th>
+        <td>
+            <input type="text" name="goods[expiry_time]" value="{$goods.expiry_time?date('Y-m-d H:i',$goods.expiry_time):'--'}" placeholder="" class="form-control" />
+            <p class="help-block">产品有效期</p>
+        </td>
+    </tr>
+
+    <tr>
+        <th>单价</th>
+        <td>
+            <input type="text" name="goods[price]" value="{$goods.price|default=''}" placeholder="" class="form-control" />
+            <p class="help-block">单价（每份的价格）</p>
+        </td>
+        <th>每份数量</th>
+        <td>
+            <input type="number" name="goods[per_unit]" value="{$goods.per_unit|default=''}" placeholder="" class="form-control" />
+            <p class="help-block">每份产品数量</p>
+        </td>
+    </tr>
+    <tr>
+        <th>总份数</th>
+        <td>
+            <input type="number" name="goods[total_units]" value="{$goods.total_units|default=''}" placeholder="" class="form-control" />
+            <p class="help-block">总份数（库存）</p>
+        </td>
+        <th>最低订购数</th>
+        <td>
+            <input type="number" name="goods[min_units]" value="{$goods.min_units|default='1'}" placeholder="" class="form-control" />
+            <p class="help-block">订单最小订购份数</p>
+        </td>
+    </tr>
+</table>
+<table class="table table-bordered">
+    <tr>
+        <th>简介</th>
+        <td>
+            <textarea rows="2" class="form-control" placeholder="" name="info[brief]">{$info.brief|default=''}</textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>详细内容</th>
+        <td>
+            <script type="text/plain" id="content" name="info[content]">{$info.content|default=''}</script>
+        </td>
+    </tr>
+</table>
+
+
+<script type="text/javascript">
+//编辑器路径定义
+var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    /*trade_info*/
+    editorcontent = new baidu.editor.ui.Editor({
+        toolbars: [
+                ['source', 'undo', 'redo', 'bold', 'italic', 'strikethrough', 'superscript', 'subscript', '|', 'fontfamily', 'fontsize', 'pasteplain', 'forecolor', 'backcolor', 'date', 'time'],
+                ['simpleupload', 'insertimage', 'music', 'insertvideo', 'attachment', 'emotion', 'spechars', 'snapscreen', 'scrawl', '|', 'wordimage', 'map', 'inserttable', 'charts']
+            ]
+            // ,initialFrameWidth:796          //初始化编辑器宽度,默认1000
+            ,
+        initialFrameHeight: 150 //初始化编辑器高度,默认320
+            ,
+        autoHeightEnabled: true //自动长高
+            ,
+        elementPathEnabled: false //是否启用元素路径，默认是显示
+            // ,iframeCssUrl: UEDITOR_HOME_URL+'themes/iframe.css'//自定义样式,UEDITOR_HOME_URL为最开始声明的
+            ,
+        indentValue: '2em' //首行缩进距离
+            ,
+        wordCount: true //是否开启字数统计
+            ,
+        maximumWords: 5000 //允许的最大字符数
+    });
+    // editorcontent = new baidu.editor.ui.Editor();
+    editorcontent.render('content');
+    // content
+    // editorcontent = new baidu.editor.ui.Editor();
+    // editorcontent.render('content');
+    try {
+        editorcontent.sync();
+    } catch (err) {}
+    
+    /*thumbnail*/
+    $('.btn-cancel-thumbnail').click(function() {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+});
+
+
+</script>

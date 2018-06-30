@@ -1,0 +1,102 @@
+<include file="public@header"/>
+<style type="text/css">
+    .search_i{width:100px!important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{$flag}管理</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+        状态 
+        <select name="status" class="form-control">
+            <option value="">请选择</option>
+            <option value="0">禁用</option>
+            <option value="1" selected>正常</option>
+            <option value="2">未验证</option>
+        </select> &nbsp; &nbsp;
+        用户类型 
+        <select name="type" class="form-control">
+            <option value="">请选择</option>
+            <option value="1">买家</option>
+            <option value="2">卖家</option>
+        </select> &nbsp; &nbsp;
+        级别 
+        <select name="level" class="form-control">
+            <option value="">请选择</option>
+            <option value="1"></option>
+        </select> &nbsp; &nbsp;
+        来源 
+        <select name="source" class="form-control">
+            <option value="">请选择</option>
+            <option value=""></option>
+        </select> &nbsp; &nbsp;
+        关键词 
+        <input class="form-control" type="text" name="keyword" style="width:200px;" value="{:input('request.keyword')}"placeholder="邮箱/手机号/认证序列"> &nbsp; &nbsp;
+        <br>
+
+        注册时间 
+        <input name="start_reg_time" value="{:input('request.start_reg_time','')}" class="form-control search_i js-bootstrap-date"> - 
+        <input name="end_reg_time" value="{:input('request.end_reg_time',date('Y-m-d',time()))}" class="form-control search_i js-bootstrap-date"> &nbsp; &nbsp;
+        最后登录时间 
+        <input name="start_login_time" value="{:input('request.start_login_time','')}" class="form-control search_i js-bootstrap-date"> - 
+        <input name="end_login_time" value="{:input('request.end_login_time',date('Y-m-d',time()))}" class="form-control search_i js-bootstrap-date"> &nbsp; &nbsp;
+        <br/>
+
+        账户余额
+        <input name="start_balance" value="{:input('request.start_balance','')}" class="form-control search_i"> - 
+        <input name="end_balance" value="{:input('request.end_balance','')}" class="form-control search_i"> &nbsp; &nbsp;
+        成功订单数
+        <input name="start_orders" value="{:input('request.start_orders','')}" class="form-control search_i"> - 
+        <input name="end_orders" value="{:input('request.end_orders','')}" class="form-control search_i"> &nbsp; &nbsp;
+        <br>
+
+        总 &nbsp;评 &nbsp;数
+        <input name="start_reviews" value="{:input('request.start_reviews','')}" class="form-control search_i"> - 
+        <input name="end_reviews" value="{:input('request.end_reviews','')}" class="form-control search_i"> &nbsp; &nbsp;
+        好 &nbsp; 评 &nbsp; 数
+        <input name="start_positives" value="{:input('request.start_positives','')}" class="form-control search_i"> - 
+        <input name="end_positives" value="{:input('request.end_positives','')}" class="form-control search_i"> &nbsp; &nbsp;
+        差 评 数
+        <input name="start_negatives" value="{:input('request.start_negatives','')}" class="form-control search_i"> - 
+        <input name="end_negatives" value="{:input('request.end_negatives','')}" class="form-control search_i"> &nbsp; &nbsp;
+        信用积分
+        <input name="start_rating" value="{:input('request.start_rating','')}" class="form-control search_i"> - 
+        <input name="end_rating" value="{:input('request.end_rating','')}" class="form-control search_i"> &nbsp; &nbsp;
+
+        <input type="submit" class="btn btn-primary" value="筛选"/>
+        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+    </form>
+    <div style="height:100%">
+        <div id="container" style="height: 100%"></div>
+    </div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/echarts/echarts.simple.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+        }]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+});
+</script>
+</body>
+</html>

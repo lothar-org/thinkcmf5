@@ -1,0 +1,77 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('index')}">{$flag}管理</a></li>
+        <li><a href="{:url('add')}">添加{$flag}</a></li>
+        <li><a> | </a></li>
+        <li class="active"><a>组成员管理</a></li>
+        <li><a href="{:url('userAdd','groupId='.$groupId)}">添加组成员</a></li>
+    </ul>
+    <p class="help-block"><a href="{:url('edit',['id'=>$groupId])}">分组名称： {$groupInfo.name}</a></p>
+
+    <form class="js-ajax-form" action="{:url('userDelete')}" method="post">
+        <div class="table-actions">
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('userDelete')}" data-subcheck="true" data-msg="您确定删除吗？">删除</button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>成员名称</th>
+                <th>邮箱</th>
+                <th>手机号</th>
+                <th>余额</th>
+                <th>成功订单数</th>
+                <th>总评数</th>
+                <th>差评数</th>
+                <th>信用积分</th>
+                <th>等级</th>
+                <th>认证</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.username}</td>
+                    <td>{$vo.email}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.balance}</td>
+                    <td>{$vo.orders}</td>
+                    <td>{$vo.reviews}</td>
+                    <td>{$vo.negatives}</td>
+                    <td>{$vo.rating}</td>
+                    <td>{$vo.level}</td>
+                    <td>{$vo.verifys}</td>
+                    <td>{$member_status[$vo.status]}</td>
+                    <td>
+                        <!-- <a href="{:url('userEdit','id='.$vo.id)}">{:lang('EDIT')}</a> &nbsp; &nbsp; -->
+                        <a href="{:url('userDelete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$pager|default=''}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    // function reloadPage(win) {
+    //     win.location.reload();
+    // }
+</script>
+</body>
+</html>

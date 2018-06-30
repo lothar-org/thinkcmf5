@@ -1,0 +1,125 @@
+<div class="tab-pane active" id="_base">
+    <table class="table table-bordered">
+        <tr>
+            <th width="100">订单号<span class="form-required">*</span></th>
+            <td style="width:35%">
+                <input type="text" name="order[order_sn]" value="{$order.order_sn|default=''}" placeholder="" class="form-control" />
+            </td>
+            <th width="100">订单标题</th>
+            <td>
+                <input type="text" name="order[order_title]" value="{$order.order_title|default=''}" placeholder="" required class="form-control">
+            </td>
+        </tr>
+
+        <tr>
+            <th>买家信息(ID)</th>
+            <td>
+                <input type="text" name="order[buyer_id]" value="{$order.buyer_id|default='--'}" class="form-control" />
+                <!-- <p class="form-control">{$order.buyer_id|default=''}</p> -->
+            </td>
+            <th>买家名</th>
+            <td>
+                <input type="text" name="order[buyer_name]" value="--"  class="form-control"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>卖家信息(ID)</th>
+            <td>
+                <input type="text" name="order[seller_id]" value="{$order.seller_id|default=''}" class="form-control" />
+                <!-- <p class="form-control">{$order.seller_id|default=''}</p> -->
+            </td>
+            <th>卖家名</th>
+            <td>
+                <input type="text" name="order[seller_name]" value="{$order.seller_name|default='--'}" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <th>产品信息(ID)</th>
+            <td>
+                <input type="text" name="order[order_id]" value="{$order.order_id|default=''}" class="form-control">
+            </td>
+            <th>产品名</th>
+            <td>
+                <input type="text" name="order[order_name]" value="{$order.order_name|default=''}" class="form-control">
+            </td>
+        </tr>
+
+        <tr>
+            <th>数量</th>
+            <td>
+                <input type="number" name="order[totals]" value="{$order.totals|default='1'}" class="form-control">
+            </td>
+            <th>单价</th>
+            <td>
+                <input type="text" name="order[price]" value="{$order.price|default='1'}" required pattern="^[0-9]+(.[0-9]{1,2})?$" class="form-control">
+            </td>
+        </tr>
+
+        <tr>
+            <th>实付款</th>
+            <td>
+                <input type="text" name="order[amount]" value="{$order.amount|default=''}" class="form-control">
+            </td>
+            <th>折扣价</th>
+            <td>
+                <input type="text" name="order[discount]" value="{$order.discount|default=''}" class="form-control">
+                <p>保证金{$order.deposit|default=''}</p>
+            </td>
+        </tr>
+
+        <tr>
+            <th>积分</th>
+            <td>
+                <input type="text" name="order[integral]" value="{$order.integral|default=''}" placeholder="" class="form-control" />
+                <p class="help-block">来源：去向：</p>
+            </td>
+            <th>折扣码</th>
+            <td>
+                <input type="number" name="order[code]" value="{$order.code|default=''}" placeholder="" class="form-control" />
+                <p class="help-block">CODE</p>
+            </td>
+        </tr>
+        <tr>
+            <th>支付方式</th>
+            <td>
+                <input type="number" name="order[payment]" value="{$order.payment|default=''}" placeholder="" class="form-control" />
+                <p class="help-block">总份数（库存）</p>
+            </td>
+            <th>付款币种</th>
+            <td>
+                <input type="number" name="order[pay_currency]" value="{$order.pay_currency|default='1'}" placeholder="" class="form-control" />
+                <p class="help-block">订单最小订购份数</p>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>下单设备</th>
+            <td>
+                <p class="form-control">{$order.device|default=''}</p>
+                <p class="help-block">下单设备类型：mobile,android,iphone,ipad,web,pc,mac,wxapp</p>
+            </td>
+            <th>下单浏览器</th>
+            <td>
+                <p class="form-control">{$order.browser|default=''}</p>
+                <p class="help-block">浏览器标识</p>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th>第三方单号</th>
+            <td>
+                <input type="text" name="order[transaction_id]" value="{$order.transaction_id|default=''}" class="form-control">
+            </td>
+        </tr>
+        <tr>
+            <th width="100">买家留言</th>
+            <td>
+                <textarea rows="2" class="form-control" placeholder="" name="order[msg]">{$order.msg|default=''}</textarea>
+            </td>
+        </tr>
+    </table>
+</div>
+

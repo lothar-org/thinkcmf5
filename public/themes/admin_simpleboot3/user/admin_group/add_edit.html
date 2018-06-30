@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">分组名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请填写等级名称" required class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th>排序</th>
+                <td>
+                    <input type="number" name="list_order" value="{$list_order|default='5'}" placeholder="排序，数字从小到大" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th>状态</th>
+                <php>$status = isset($status)?$status:1;</php>
+                <td>
+                    <a style="display:{$status==0?='none'}" data-toggle="tooltip" title="已开启"><i style="font-size:20px;" class="fa fa-toggle-on"></i></a>
+                    <a style="display:{$status==1?='none'}" data-toggle="tooltip" title="已关闭"><i style="font-size:20px;" class="fa fa-toggle-off"></i></a>
+
+                    <!-- <a data-toggle="tooltip" title="已开启" id="status_switch"><i class="fa fa-toggle-on"></i></a> -->
+
+                    <input type="hidden" name="status" value="{$status}" id="status_change">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('.fa-toggle-on').click(function() {
+            $(this).parent('a').hide();
+            $('.fa-toggle-off').parent('a').show();
+            $('#status_change').val(0);
+        });
+        $('.fa-toggle-off').click(function() {
+            $(this).parent('a').hide();
+            $('.fa-toggle-on').parent('a').show();
+            $('#status_change').val(1);
+        });
+
+        // $('.fa-toggle-on').click(function() {
+        //     $(this).parent().attr('data-original-title','已关闭');
+        //     $(this).removeClass('fa-toggle-on').addClass('fa-toggle-off');
+        //     $('#status_change').val(0);
+        // });
+        // $('.fa-toggle-off').click(function() {
+        //     alert(123)
+        //     $(this).parent().attr('data-original-title', '已开启');
+        //     $(this).removeClass('fa-toggle-off').addClass('fa-toggle-on');
+        //     $('#status_change').val(1);
+        // });
+
+        // toggle不生效
+        // $('#status_switch').toggle(
+        //     function(){
+        //         $(this).attr('title', '已开启');
+        //         $('#status_switch i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
+        //         $('#status_change').val(1);
+        //     },
+        //     function(){
+        //         $(this).attr('title','已关闭').children('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
+        //         $('#status_change').val(0);
+        //     },
+        // );
+    });
+</script>

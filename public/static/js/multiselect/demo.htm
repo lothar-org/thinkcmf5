@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>jQuery MultiSelect Widget Demo</title>
+    <link rel="stylesheet" type="text/css" href="jquery.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-ui.css" />
+    <script type="text/javascript" src="jquery.1.7.2.min.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    <script type="text/javascript" src="jquery.multiselect.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $("#example").multiselect({
+            header: false,
+            height: 200,
+            minWidth: 200,
+            selectedList: 10, //预设值最多显示10被选中项
+            hide: ["explode", 500],
+            noneSelectedText: 'Please select an option',
+            close: function() {
+                var values = $("#example").val();
+                $("#hfexample").val(values);
+            }
+        });
+        $("#example2").multiselect({
+            header: false,
+            height: 200,
+            minWidth: 200,
+            selectedList: 10, //预设值最多显示10被选中项
+            hide: ["explode", 500],
+            noneSelectedText: 'Please select an option',
+            close: function() {
+                var values = $("#example2").val();
+                $("#hfexample2").val(values);
+            }
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <h2>Displaying options in a list</h2>
+    <p>
+        <select id="example" name="example" multiple="multiple" style="width:400px">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+            <option value="option5">Option 5</option>
+            <option value="option6">Option 6</option>
+            <option value="option7">Option 7</option>
+        </select>
+        <input type="hidden" id="hfexample" />
+    </p>
+    <p>
+        <select id="example2" name="example" multiple="multiple" style="width:400px">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+            <option value="option5">Option 5</option>
+            <option value="option6">Option 6</option>
+            <option value="option7">Option 7</option>
+        </select>
+        <input type="hidden" id="hfexample2" />
+    </p>
+    <h1>
+		<!--刷新后，multiselect 还可以显示之前的选中项-->
+		类型：
+		<!-- <select id="Category" name="Category" multiple="multiple" style="width: 100px">
+		<option value="0" <% if((","+searchCategoryID+",").IndexOf(",0,")>-1) { %> selected="selected" <%} %> >请选择类型</option>
+		<option value="1" <% if((","+searchCategoryID+",").IndexOf(",1,")>-1) { %> selected="selected" <%} %> >1</option>
+		<option value="2" <% if((","+searchCategoryID+",").IndexOf(",2,")>-1) { %> selected="selected" <%} %> >2</option>
+		</select>
+		<asp:HiddenField ID="hfCategory" runat="server" />  -->
+	</h1>
+</body>
+
+</html>

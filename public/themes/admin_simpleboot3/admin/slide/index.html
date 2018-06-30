@@ -1,0 +1,51 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('slide/index')}">广告位置列表</a></li>
+			<li><a href="{:url('slide/add')}">添加广告位置</a></li>
+		</ul>
+	    <form class="well form-inline margin-top-20" method="post" action="{:url('slide/index')}">
+	        大类：
+	        <select name="parent" class="form-control" style="width:160px;">
+	            {$cates|default=''}
+	        </select> &nbsp; &nbsp;
+	        关键词：
+	        <input class="form-control" type="text" name="keyword" style="width:200px;" value="{:input('request.keyword')}"
+	               placeholder="名称">
+	        <input type="submit" class="btn btn-primary" value="搜索"/>
+	        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+	    </form>
+
+		<table class="table table-hover table-bordered margin-top-20">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>广告位置名称</th>
+					<th>备注</th>
+					<th width="220">{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.name}</td>
+					<td>
+						{$vo.remark}
+					</td>
+					<td>
+                        <a href="{:url('slide/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+						<a href="javascript:parent.openIframeLayer('{:url('slideItem/index',array('slide_id'=>$vo['id']))}','管理 {$vo.name} 的广告',{});">管理广告</a> &nbsp; &nbsp;
+                        <a href="{:url('slide/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$pager|default=''}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

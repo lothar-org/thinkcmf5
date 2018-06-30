@@ -1,0 +1,76 @@
+<include file="public@header"/>
+</head>
+
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{$flag}管理</a></li>
+        <li><a href="{:url('add')}">发送{$flag}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+        消息类型：
+        <select name="type" class="form-control">
+            {$types|default=''}
+        </select> &nbsp; &nbsp;
+        关键词：
+        <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}"
+               placeholder="主题">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('opChange','op=0')}" data-subcheck="true">未读</button>
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('opChange',['op'=>1])}" data-subcheck="true">已读</button>
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('opChange',array('op'=>2))}" data-subcheck="true">已处理</button>
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('delete')}" data-subcheck="true" data-msg="您确定删除吗？">删除</button>
+        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>消息类型</th>
+                <th>发送者</th>
+                <th>接收者</th>
+                <th>主题</th>
+                <th>IP地址</th>
+                <th>发送时间</th>
+                <th>{:lang('STATUS')}</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$typeV[$vo.type]}</td>
+                    <td>【{$vo.from_id}】{$vo.from_name}</td>
+                    <td>【{$vo.to_id}】{$vo.to_name}</td>
+                    <td>{$vo.subject}</td>
+                    <td>{$vo.ip}</td>
+                    <td>
+                        {$vo['create_time']?date('Y-m-d H:i:s',$vo['create_time']):lang('NOT_FILLED')}
+                    </td>
+                    <td>{$statusV[$vo.status]}</td>
+                    <td>
+                        <a href="{:url('edit','id='.$vo.id)}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                        <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$pager|default=''}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('rbac/index')}">{:lang('ADMIN_RBAC_INDEX')}</a></li>
+			<li><a href="{:url('rbac/roleAdd')}">{:lang('ADMIN_RBAC_ROLEADD')}</a></li>
+		</ul>
+		<form action="{:url('Rbac/listorders')}" method="post" class="margin-top-20">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="40">ID</th>
+						<th align="left">{:lang('ROLE_NAME')}</th>
+						<th align="left">{:lang('ROLE_DESCRIPTION')}</th>
+						<th width="60" align="left">{:lang('STATUS')}</th>
+						<th width="260">{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="roles" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.name}</td>
+						<td>{$vo.remark}</td>
+						<td>
+							<empty name="vo.status">
+							    <a data-toggle="tooltip" title="禁用" style="color:#F00"><i class="fa fa-close"></i></a>
+							<else/>
+							    <a data-toggle="tooltip" title="正常"><i class="fa fa-check"></i></a>
+							</empty>
+						</td>
+						<td>
+							<if condition="$vo['id'] eq 1">
+								<font color="#ccc">{:lang('ROLE_SETTING')}</font> &nbsp; &nbsp;
+								<a href="javascript:openIframeDialog('{:url('rbac/member',array('id'=>$vo['id']))}','成员管理');">成员管理</a> &nbsp; | &nbsp; 
+								<font color="#ccc">{:lang('EDIT')}</font> &nbsp; &nbsp;
+								<font color="#ccc">{:lang('DELETE')}</font>
+							<else />
+								<a href="{:url('Rbac/authorize',array('id'=>$vo['id']))}">{:lang('ROLE_SETTING')}</a> &nbsp; &nbsp;
+								<a href="javascript:openIframeDialog('{:url('rbac/member',array('id'=>$vo['id']))}','成员管理');">成员管理</a> &nbsp; | &nbsp; 
+								<a href="{:url('Rbac/roleedit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+								<a class="js-ajax-delete" href="{:url('Rbac/roledelete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+							</if>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

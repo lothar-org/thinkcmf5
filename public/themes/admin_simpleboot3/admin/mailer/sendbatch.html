@@ -1,0 +1,52 @@
+<include file="public@header" />
+</head>
+<body>
+    <div class="wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('mailer/index')}">{:lang('ADMIN_MAILER_INDEX')}</a></li>
+            <li><a href="{:url('add')}">添加邮箱</a></li>
+            <li><a href="{:url('edit')}">编辑邮箱</a></li>
+            <li><a> | </a></li>
+            <li class="active"><a href="javascript:void(0);">邮件群发测试</a></li>
+            <li><a href="{:url('mailer/template')}?template_key=verification_code">数字验证码邮件模板</a></li>
+        </ul>
+        <form method="post" class="form-horizontal margin-top-20 js-ajax-form" action="{:url('sendbatch')}">
+            <div class="form-group">
+                <label for="input-to" class="col-sm-2 control-label">收件箱</label>
+                <div class="col-md-6 col-sm-10">
+                    <select name="to_group" class="form-control">
+                        {$groups|default=''}
+                    </select>
+                    <p class="help-block">按组发送。优先组发送</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-md-6 col-sm-10">
+                    <textarea id="input-to" class="form-control" rows="2" name="to"></textarea>
+                    <p class="help-block">多个邮箱用英文逗号(,)隔开。</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-subject" class="col-sm-2 control-label"><span class="form-required">*</span>标题</label>
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" id="input-subject" class="form-control" name="subject" value="测试-标题" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-content" class="col-sm-2 control-label"><span class="form-required">*</span>内容</label>
+                <div class="col-md-6 col-sm-10">
+                    <textarea id="input-content" class="form-control" required name="content">测试-内容</textarea>
+                    <p class="help-block">这个是固定内容发给所有人，没有模板替换</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary js-ajax-submit1">发送</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

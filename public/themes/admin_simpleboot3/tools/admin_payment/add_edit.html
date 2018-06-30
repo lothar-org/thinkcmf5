@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="第三方支付名称" required class="form-control" />
+                    <p class="help-block">第三方支付名称</p>
+                </td>
+            </tr>
+            <tr>
+                <th>唯一标识符<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="code" value="{$code|default=''}" placeholder="" required class="form-control">
+                    <p class="help-block">用于标识识别</p>
+                </td>
+            </tr>
+            <tr>
+                <th>说明</th>
+                <td>
+                    <textarea style="height: 100px;" class="form-control" placeholder="" name="note">{$note|default=''}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>账户<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="account" value="{$account|default=''}" placeholder="" required class="form-control"/>
+                    <p class="help-block">通用1：账号</p>
+                </td>
+            </tr>
+            <tr>
+                <th>合作者</th>
+                <td>
+                    <input type="text" name="papp" value="{$papp|default=''}" placeholder="" class="form-control"/>
+                    <p class="help-block">通用2：合作者、商户号……</p>
+                </td>
+            </tr>
+            <tr>
+                <th>密钥<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="pkey" value="{$pkey|default=''}" placeholder="" required class="form-control"/>
+                    <p class="help-block">通用3：密钥</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th><b>小图标</b></th>
+                <td>
+                    <div style="text-align: center;">
+                        <input type="hidden" name="icon" id="thumbnail" value="{$icon|default=''}">
+                        <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                            <if condition="empty($icon)">
+                                <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" style="max-height:64px;cursor:pointer" />
+                                <else/>
+                                <img src="{:cmf_get_image_preview_url($icon)}" id="thumbnail-preview" style="max-height:64px;cursor:pointer" />
+                            </if>
+                        </a>
+                        <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><b>排序</b></th>
+                <td>
+                    <input type="number" name="list_order" value="{$list_order|default=''}" placeholder="从小到大顺序" style="text-align: center;" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th><b>状态</b></th>
+                <td>
+                    <input type="checkbox" name="status" value="1" {$status?='checked'}  class="form-control"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

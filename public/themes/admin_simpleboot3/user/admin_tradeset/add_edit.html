@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">用户<span class="form-required">*</span></th>
+                <td class="well form-inline">
+                    <input type="text" name="uname" value="{$username|default=''}" style="width:200px;" class="form-control">
+                    <button type="submit" class="btn btn-primary js-ajax-submit" data-action="{:url('uname')}" data-refresh="0">检索</button>
+                    <p class="help-block">网站成员。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>交易URL<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="url" value="{$url|default=''}" class="form-control">
+                    <p class="help-block">针对Steam等平台。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>状态</th>
+                <td>
+                    <php>$status = isset($status)?$status:0;</php>
+                    <input type="radio" name="status" value="1" {$status==1?='checked'}/> 开启 &nbsp; &nbsp;
+                    <input type="radio" name="status" value="0" {$status==0?='checked'}/> 关闭
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

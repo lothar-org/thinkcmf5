@@ -1,0 +1,66 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{$flag}管理</a></li>
+        <li><a href="{:url('add')}">添加{$flag}</a></li>
+    </ul>
+
+    <form class="js-ajax-form" action="{:url('delete')}" method="post">
+        <div class="table-actions">
+            <button type="submit" class="btn btn-primary btn-sm js-ajax-submit" data-action="{:url('delete')}" data-subcheck="true" data-msg="这将删除组内所有成员，您确定删除吗？">删除</button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>分组名称</th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>状态</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo['create_time']?date('Y-m-d H:i',$vo['create_time']):lang('NOT_FILLED')}</td>
+                    <td>{$vo.update_time?date('Y-m-d H:i',$vo.update_time):lang('NOT_FILLED')}</td>
+                    <td>
+                        <empty name="vo.status">
+                            <a data-toggle="tooltip" title="隐藏" style="color:#F00"><i class="fa fa-close"></i></a>
+                        <else/>
+                            <a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>
+                        </empty>
+                    </td>
+                    <td>
+                        <a href="{:url('userList','groupId='.$vo.id)}">{:lang('VIEW')}组成员</a> &nbsp; &nbsp;
+                        <a href="{:url('edit','id='.$vo.id)}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                        <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete1" data-msg="这将删除组内所有成员，您确定删除吗？">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$pager|default=''}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    // function reloadPage(win) {
+    //     win.location.reload();
+    // }
+</script>
+</body>
+</html>

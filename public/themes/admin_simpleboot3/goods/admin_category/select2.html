@@ -1,0 +1,77 @@
+<link rel="stylesheet" type="text/css" href="__STATIC__/js/select2/select2.min.css">
+<script type="text/javascript" src="__STATIC__/js/select2/select2.min.js"></script>
+<script type="text/javascript">
+    //页面加载完成后初始化select2控件  
+    $(function() {
+        var json = {
+            placeholder:'请选择',
+            language:"zh-CN",
+            allowClear:true,
+            minimumResultsForSearch:10,
+        };
+
+        // 类别 影响添加产品页样式
+        // $('#lot-type').select2(json);
+
+        // 1级
+        $('#lot-game').select2(json);
+        $('#lot-game').change(function(){
+            loupts('game','second');
+            $('#lot-third').html('<option value="0">请选择</option>');
+        });
+        // 2级
+        $('#lot-second').select2(json);
+        $('#lot-second').change(function(){
+            loupts('second','third');
+        })
+        // 3级
+        $('#lot-third').select2(json);
+    });
+
+    // 事件
+    function loupts(id,id2,opt='请选择') {
+        var val = $('#lot-'+id).val();
+        var type = $('#lot-type').val();
+        var action = '{$action}';
+
+        $.ajax({
+            url:"{:url('adminCategory/ajaxFirst')}",
+            type: 'GET',
+            dataType: 'JSON',
+            data: {q: val, type: type, action: action},
+            success:function (data) {
+                // console.log(data);
+                // var obj = eval('(' + data + ')'); 
+                // alert(obj[1].name)
+                var num = data.length;
+                if(num>0){
+                    var option = '<option value="0">'+opt+'</option>';
+                    for(var i=0;i<num;i++){
+                        option += '<option '+(val==data[i].id?'selected':'')+' value="'+data[i].id+'">'+data[i].name+'</option>';
+                    }
+                    $('#lot-'+id2).html(option);
+                    // $('#lot-'+id2).val(id); //编辑时绑定
+                    $('#lot-'+id2).select2({minimumResultsForSearch:10});//加载样式
+                    // $('#'+id2+'-disco').show();//等于display:block
+                    $('#'+id2+'-disco').css('display', 'block');
+                } else {
+                    $('#lot-'+id2).html('');
+                    $('#'+id2+'-disco').hide();
+                }
+                if (id=='game') {
+                    $('#lot-third').html('');
+                    $('#third-disco').hide();
+                    // $('#'+id2+'-disco').remove();
+                }
+            },
+            error:function(e) {
+                BackErr(e);
+                // alert("系统异常，请稍候重试！");
+            }
+        });
+    }
+
+    function ajaxAction(data) {
+
+    }
+</script>

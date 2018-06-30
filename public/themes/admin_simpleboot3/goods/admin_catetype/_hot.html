@@ -1,0 +1,60 @@
+<table class="table table-bordered">
+    <tr>
+        <th width="100">热词</th>
+        <td>
+            <input type="text" name="hot[name]" value="{$hot.name|default=''}" required class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <th>URL</th>
+        <td>
+            <input type="text" name="hot[url]" value="{$hot.url|default=''}" class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <th>热搜次数</th>
+        <td>
+            <input type="number" name="hot[count]" value="{$hot.count|default='0'}" class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <th>是否推荐</th>
+        <td>
+            <php>$is_rec = isset($hot['is_rec']) ? $hot['is_rec'] : 1;</php>
+            <label><input type="radio" name="hot[is_rec]" value="1" {$is_rec==1?='checked'} /> 是</label> &nbsp; &nbsp;
+            <label><input type="radio" name="hot[is_rec]" value="0" {$is_rec==0?='checked'} /> 否</label>
+        </td>
+    </tr>
+</table>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th width="50">ID</th>
+        <th>热词</th>
+        <th>URL</th>
+        <th>热搜次数</th>
+        <th>是否推荐</th>
+        <th>状态</th>
+        <th>{:lang('ACTIONS')}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <notempty name="hots">
+    <foreach name="hots" item="vo">
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.url}</td>
+            <td>{$vo.count}</td>
+            <td>{$vo.is_rec}</td>
+            <td>{$vo.status}</td>
+            <td>
+                <!-- <a href="{:url('edit',['id'=>$vo.id,'gameId'=>$gameId])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> -->
+            </td>
+        </tr>
+    </foreach>
+    </notempty>
+    </tbody>
+</table>

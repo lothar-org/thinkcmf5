@@ -1,0 +1,19 @@
+<include file="public@header"/>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('index')}">{$flag}管理</a></li>
+            <li><a href="{:url('add')}">添加{$flag}</a></li>
+            <li><a> | </a></li>
+            <li><a href="{:url('userList','groupId='.$groupId)}">组成员管理</a></li>
+            <li class="active"><a>添加组成员</a></li>
+        </ul>
+        <p class="help-block">按条件存储 或 把符合条件的用户加进去</p>
+        <a href="{:url('AdminIndex/index')}">添加组成员</a>
+        <div class="row">
+
+        </div>
+    </div>
+</body>

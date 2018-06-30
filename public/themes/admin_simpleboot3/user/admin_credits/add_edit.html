@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">等级名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请填写等级名称" required class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th>积分区间</th>
+                <td>
+                    开始值: <input type="text" name="start_range" value="{$start_range|default=''}" required maxlength="11" class="form-control" style="width:110px;display:inline-block;"> &nbsp; &nbsp; &nbsp; &nbsp;
+                    结束值: <input type="text" name="end_range" value="{$end_range|default=''}" required maxlength="11" class="form-control" style="width:110px;display:inline-block;">
+                    <p class="help-block">1、区间结束值不能小于区间开始值；</p>
+                    <p class="help-block">2、添加：开始值不能比已有的区间最大值小；开始值应该比已有的区间最大值大1；</p>
+                    <p class="help-block">3、编辑：系统统一区间。</p>
+                </td>
+            </tr>
+            <tr>
+                <th>小图标</th>
+                <td>
+                    <input type="hidden" name="icon" id="thumbnail"
+                           value="{$icon|default=''}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($icon)">
+                            <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                 id="thumbnail-preview"
+                                 style="width:32px;cursor:pointer"/>
+                        <else/>
+                            <img src="{:cmf_get_image_preview_url($icon)}"
+                                 id="thumbnail-preview"
+                                 style="width:32px;cursor:pointer"/>
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <p>参考图</p>
+        <pre>
+        0~3 新卖家
+        4~10    
+        11~40   
+        41~90   
+        91~150  
+        151~250 青铜5级
+        251~500 
+        501~1000    
+        1001~2000   
+        2001~5000   
+        5001~10000  白银5级
+        10001~20000 
+        20001~50000 
+        50001~100000    
+        100001~200000   
+        200001~500000   黄金5级
+        500001~1000000  
+        1000001~2000000 
+        2000001~5000000 
+        5000000~10000000    
+        10000000以上  钻石5级
+        </pre>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+    });
+</script>

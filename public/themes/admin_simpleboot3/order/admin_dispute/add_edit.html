@@ -1,0 +1,80 @@
+<style type="text/css">
+.iblock {
+    display: inline-block;
+}
+</style>
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">订单<span class="form-required">*</span></th>
+                <td>
+                    <input type="number" name="puts[order_id]" value="{$order_id|default=''}" required />
+                    <input type="text" name="puts[order_title]" value="{$order_title|default=''}">
+                </td>
+            </tr>
+            <tr>
+                <th>买家<span class="form-required">*</span></th>
+                <td>
+                    <input type="number" name="puts[buyer_id]" value="{$buyer_id|default=''}" required />
+                    <p class="form-control"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>卖家<span class="form-required">*</span></th>
+                <td>
+                    <input type="number" name="puts[seller_id]" value="{$seller_id|default=''}" required />
+                    <p class="form-control"></p>
+                </td>
+            </tr>
+
+            <tr>
+                <th>投诉内容</th>
+                <td>
+                    <script type="text/plain" id="content" name="puts[description]">{$description|default=''}</script>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th>投诉者IP</th>
+                <td>{$ip|default=''}</td>
+            </tr>
+            <tr>
+                <th>投诉时间</th>
+                <td>{$create_time?=date('Y-m-d H:i',$create_time)}</td>
+            </tr>
+            <tr>
+                <th>处理时间</th>
+                <td>{$update_time?=date('Y-m-d H:i',$update_time)}</td>
+            </tr>
+            <tr>
+                <th>处理人</th>
+                <td>【{$deal_id|default=''}】</td>
+            </tr>
+            <tr>
+                <th>状态</th>
+                <td>
+                    <select name="puts[status]" class="form-control" style="width:140px;">
+                        {$statusV|default=''}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+//编辑器路径定义
+var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    editorcontent = new baidu.editor.ui.Editor({toolbars: [['fontfamily','fontsize','simpleupload','insertimage','emotion','spechars','scrawl','map']],initialFrameHeight:100,elementPathEnabled:false,wordCount:false});
+    editorcontent.render('content');
+    try { editorcontent.sync(); } catch (err) {}
+});
+</script>

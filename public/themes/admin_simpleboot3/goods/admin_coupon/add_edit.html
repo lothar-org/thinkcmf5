@@ -1,0 +1,66 @@
+<style type="text/css">
+    .iblock{display:inline-block;}
+</style>
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered">
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请输入折扣名称" required class="form-control" />
+                    <p class="help-block">折扣模型名称</p>
+                </td>
+            </tr>
+            <tr>
+                <th>折扣码<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="code" value="{$code|default=''}" placeholder="" required class="form-control"/>
+                    <p class="help-block">用于产品交易时</p>
+                </td>
+            </tr>
+            <tr>
+                <th>满减规则</th>
+                <td>
+                    <php>$bot = isset($bot)?$bot:1;</php>
+                    <select name="bot" class="form-control iblock" style="width:100px;">
+                        <option {$bot==1?='selected'} value="1">固定值</option>
+                        <option {$bot==2?='selected'} value="2">百分比</option>
+                    </select> &nbsp; &nbsp; 
+                    满 <input type="number" name="attain" value="{$attain|default='0'}" class="form-control iblock" style="width:100px;" /> &nbsp;
+                    减 <input type="text" name="reduce" value="{$reduce|default=''}" class="form-control iblock" style="width:100px;" /> &nbsp;
+                    <p class="help-block">满多少钱减多少。 单位：$（美元）。 0表示无条件</p>
+                </td>
+            </tr>
+            <tr>
+                <th>重复使用</th>
+                <td align="left">
+                    <input type="checkbox" name="is_repeat" value="1" {$is_repeat?='checked'} class="form-control" style="width:50px;" />
+                </td>
+            </tr>
+            <tr>
+                <th>周期</th>
+                <td>
+                    开始时间： <input type="text" name="start_time" value="{:date('Y-m-d H:i:s',$start_time)}" class="form-control iblock js-bootstrap-datetime" style="width:180px;" /> &nbsp; &nbsp; 
+                    结束时间： <input type="text" name="end_time" value="{:date('Y-m-d H:i:s',$end_time)}" class="form-control iblock js-bootstrap-datetime" style="width:180px;" />
+                </td>
+            </tr>
+            <tr>
+                <th>状态</th>
+                <td>
+                    <input type="radio" name="status" value="1" {$status==1?='checked'} /> 启用 &nbsp; &nbsp; 
+                    <input type="radio" name="status" value="0" {$status==0?='checked'} /> 不启用
+                </td>
+            </tr>
+            <tr>
+                <th>描述</th>
+                <td>
+                    <textarea class="form-control" rows="3" name="description">{$description|default=''}</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+        </table>
+    </div>
+</div>

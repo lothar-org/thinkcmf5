@@ -1,0 +1,27 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('mailer/index')}">{:lang('ADMIN_MAILER_INDEX')}</a></li>
+        <li class="active"><a>添加邮箱</a></li>
+        <li><a> | </a></li>
+        <li><a href="{:url('mailer/template')}?template_key=verification_code">数字验证码邮件模板</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('addPost')}">
+        <include file="mailer/add_edit" />
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+        $('#js-smtpsecure').val("{$smtp_secure|default=''}");
+    });
+</script>
+</body>
+</html>

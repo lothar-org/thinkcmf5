@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-bordered">
+            <tr>
+                <th>上级</th>
+                <td>
+                    <select name="parent_id" class="form-control" style="width:50%;" id="category">
+                        <option value="0">作为一级分类</option>
+                        {$categories_tree}
+                    </select>
+                    <p class="help-block">拆分为联动或者使用带筛选的选择框插件，比如select2。</p>
+                </td>
+            </tr>
+
+            <tr>
+                <th width="100">名称<span class="form-required">*</span></th>
+                <td>
+                    <input type="text" name="name" value="{$name|default=''}" placeholder="请填写分类名称" required class="form-control">
+                </td>
+            </tr>
+
+            <tr>
+                <th>SEO标题</th>
+                <td>
+                    <input type="text" name="seo_title" value="{$seo_title|default=''}" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <th>SEO关键词</th>
+                <td>
+                    <input type="text" name="seo_keywords" value="{$seo_keywords|default=''}" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <th>SEO描述</th>
+                <td>
+                    <textarea rows="5" class="form-control" name="seo_description">{$seo_description|default=''}</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <table class="table table-bordered">
+            <tr>
+                <th>小图标</th>
+                <td>
+                    <input type="hidden" name="icon" id="thumbnail" value="{$icon|default=''}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($icon)">
+                            <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" style="width:32px;cursor:pointer" />
+                        <else/>
+                            <img src="{:cmf_get_image_preview_url($icon)}" id="thumbnail-preview" style="width:32px;cursor:pointer" />
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+                </td>
+            </tr>
+
+            <php>
+                $status = isset($status)?$status:1;
+            </php>
+
+            <tr>
+                <th><b>状态</b></th>
+                <td>
+                    <label><input type="radio" name="status" value="1" {$status==1?='checked'} /> 开启</label> &nbsp; &nbsp;
+                    <label><input type="radio" name="status" value="0" {$status==0?='checked'} /> 关闭</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/js/select2/select2.min.css">
+<script type="text/javascript" src="__STATIC__/js/select2/select2.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.btn-cancel-thumbnail').click(function() {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+    
+    //页面加载完成后初始化select2控件
+    $("#category").select2();
+});
+</script>

@@ -1,0 +1,80 @@
+<div class="form-group">
+    <label for="input-from_name" class="col-sm-2 control-label">
+        <span class="form-required">*</span> {:lang('SENDER_NAME')}
+        <a href="http://www.thinkcmf.com/faq.html?url=https://www.kancloud.cn/thinkcmf/faq/493502" title="查看帮助手册" data-toggle="tooltip" target="_blank"><i class="fa fa-question-circle"></i></a>
+    </label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-from_name" required name="from_name" value="{$from_name|default=''}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="input-from" class="col-sm-2 control-label">
+        <span class="form-required">*</span>{:lang('SENDER_EMAIL_ADDRESS')}
+    </label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-from" required name="from" value="{$from|default=''}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="input-host" class="col-sm-2 control-label">
+        <span class="form-required">*</span>{:lang('SENDER_SMTP_SERVER')}
+    </label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-host" required name="host" value="{$host|default=''}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="js-smtpsecure" class="col-sm-2 control-label">连接方式</label>
+    <div class="col-md-6 col-sm-10">
+        <select name="smtp_secure" id="js-smtpsecure" class="form-control">
+            <option value="">默认</option>
+            <option value="ssl">ssl</option>
+            <option value="tls">tls</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="input-port" class="col-sm-2 control-label">SMTP服务器端口</label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-port" name="port" value="{$port|default=''}" placeholder="默认为25">
+    </div>
+</div>
+<div class="form-group">
+    <label for="input-login_name" class="col-sm-2 control-label">
+        <span class="form-required">*</span>{:lang('SMTP_MAIL_ADDRESS')}
+    </label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-login_name" required name="username" value="{$username|default=''}">
+    </div>
+</div>
+<div class="form-group">
+    <label for="input-password" class="col-sm-2 control-label">
+        <span class="form-required">*</span>{:lang('SMTP_MAIL_PASSWORD')}
+    </label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-password" required name="password" value="{$password|default=''}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="input-upper" class="col-sm-2 control-label">每日上限</label>
+    <div class="col-md-6 col-sm-10">
+        <input type="text" class="form-control" id="input-upper" name="upper_limit" value="{$upper_limit|default='500'}">
+        <!-- <p class="help-block">每日发送上限</p> -->
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">今日已使用</label>
+    <div class="col-md-6 col-sm-10">
+        <p class="form-control">{$used_limit|default='0'}</p>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">状态</label>
+    <div class="col-md-6 col-sm-10">
+        <php>$status = isset($status)?$status:1;</php>
+        <label><input type="radio" name="status" value="1" {$status?='checked'} /> 开启</label> &nbsp; &nbsp;
+        <label><input type="radio" name="status" value="0"  {$status==0?='checked'} /> 关闭</label>
+    </div>
+</div>

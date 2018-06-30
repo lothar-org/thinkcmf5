@@ -1,0 +1,38 @@
+<link rel="stylesheet" type="text/css" href="__STATIC__/js/select2/select2.min.css">
+<script type="text/javascript" src="__STATIC__/js/select2/select2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 页面加载完成后初始化select2控件
+        $("#select-href").select2();
+        
+        $("#select-href,#select-href-radio").click(function () {
+            checkChange(2);
+        });
+
+        $("#select-href").change(function () {
+            var $this = $(this);
+            var label = $this.find("option[value='" + $this.val() + "']").data('name');
+            $('#name-input').val(label);
+        });
+
+        $("#external-link-input,#external-link-radio").click(function () {
+            checkChange(1);
+        });
+    });
+
+    function checkChange(i) {
+        if (i == 1) {
+            //自动输入url
+            $('#external-link-input').attr('name', 'external_href');
+            $('#select-href').removeAttr('name');
+            $('#select-href-radio').prop('checked', false);
+            $('#external-link-radio').prop('checked', true);
+        } else {
+            //选择链接url
+            $('#select-href').attr('name', 'href');
+            $('#external-link-input').removeAttr('name');
+            $('#select-href-radio').prop('checked', true);
+            $('#external-link-radio').prop('checked', false);
+        }
+    }
+</script>

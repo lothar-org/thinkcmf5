@@ -1,0 +1,38 @@
+<include file="public@header" />
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('index')}">{$flag}管理</a></li>
+            <li class="active"><a href="javascript:void(0);">添加{$flag}</a></li>
+        </ul>
+        <div class="row margin-top-20">
+            <div class="col-md-1">
+                <div class="list-group">
+                    <a class="list-group-item" href="#_base" data-toggle="tab">基本属性</a>
+                    <a class="list-group-item" href="#_more" data-toggle="tab">更多属性</a>
+                    <a class="list-group-item" href="#_shop" data-toggle="tab">店铺设置</a>
+                </div>
+            </div>
+            <form action="{:url('addPost')}" method="post" class="form-horizontal js-ajax-form">
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <include file="admin_index/add_edit" />
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary js-ajax-submit1">{:lang('ADD')}</button>
+                            <a class="btn btn-default" href="{:url('index')}">{:lang('BACK')}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <include file="admin_index/right" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<include file="public@header" />
+<style type="text/css">
+    .syct{float:left;margin-right:8px;}
+    .iblock{display:inline-block;}
+</style>
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a>{$flag}管理</a></li>
+            <li><a href="{:url('add')}">添加{$flag}</a></li>
+        </ul>
+        <form method="post" action="{:url('index')}" class="well form-inline margin-top-20" style="float:left;width:100%;">
+            <include file="admin_category/linkage" />
+            <div class="syct">
+                关键词：
+                <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}" placeholder="请输入子一级名称">
+            </div>
+            <input type="submit" class="btn btn-primary syct" value="搜索" />
+            <a class="btn btn-danger syct" href="{:url('index')}">清空</a>
+        </form>
+        <div class="clearfix"></div>
+        <form class="js-ajax-form" action="{:url('listOrder')}" method="post">
+            <div class="table-actions">
+                <button type="submit" class="btn btn-primary btn-sm js-ajax-submit">{:lang('SORT')}</button>
+            </div>
+            <table class="table table-hover table-bordered table-list">
+                <thead>
+                    <tr>
+                        <th width="50">排序</th>
+                        <th width="50">ID</th>
+                        <th width="80">类别</th>
+                        <th>名称</th>
+                        <th>CODE</th>
+                        <th>索引</th>
+                        <th>基本单位</th>
+                        <th>缩略图</th>
+                        <th>热门/状态</th>
+                        <th>{:lang('ACTIONS')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="list" item="vo">
+                    <tr>
+                        <td><input type='text' name='list_orders[{$vo.id}]' value='{$vo.list_order}' size='3' class='input-order'></td>
+                        <td>{$vo.id}</td>
+                        <td>
+                            <eq name="vo.pre_id" value="0">▉〓▉<else/>{$types[$vo.type]}</eq>
+                        </td>
+                        <td>
+                            <i class="fa fa-plus-square" data-id="{$vo.id}" data-type='{$vo.type}' onclick="lothar_plus(this);"></i> 
+                            <i class="fa fa-minus-square" data-id="{$vo.id}" data-type='{$vo.type}' onclick="lothar_minus(this);" style="display:none;"></i> 
+                            <a>{$vo.name}</a>
+                        </td>
+                        <td>{$vo.code}</td>
+                        <td>{$vo.gindex}</td>
+                        <td>{$vo.unit}</td>
+                        <td>
+                            <a href="javascript:parent.imagePreviewDialog('{:cmf_get_image_preview_url($vo.thumbnail)}');"><i class="fa fa-photo fa-fw"></i></a>
+                        </td>
+                        <td>
+                            <empty name="vo.is_hot">
+                                <a style="color:#CCC" data-toggle="tooltip" title="未推荐"><i class="fa fa-thumbs-down"></i></a>
+                             <else/>
+                                <a data-toggle="tooltip" title="已推荐"><i class="fa fa-thumbs-up"></i></a>
+                            </empty>
+                            <empty name="vo.status">
+                                <a style="color:#F00" data-toggle="tooltip" title="隐藏"><i class="fa fa-close"></i></a>
+                            <else/>
+                                <a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>
+                            </empty>
+                        </td>
+                        <td>
+                            <a href="{:url('add',['parent'=>$vo.id])}">添加子项</a> &nbsp; &nbsp;
+                            <a href="{:url('edit',['id'=>$vo.id])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                            <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> &nbsp; &nbsp;
+                            <eq name="vo.pre_id" value="0">
+                                <a href="{:url('AdminCatetype/index', 'gameId='.$vo.id)}">关联类型</a>
+                                <!-- <a target="_blank" href="{:url('AdminCatetype/index', 'gameId='.$vo.id)}">关联类型</a> -->
+                                <!-- <a target="_blank" href="javascript:parent.openIframeLayer('{:url('AdminCatetype/index',['gameId'=>$vo.id])}','管理 {$vo.name} 类型',{});">关联类型</a> -->
+                            </eq>
+                        </td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            <div class="pagination">{$pager|default=''}</div>
+        </form>
+    </div>
+    <script src="__STATIC__/js/admin.js"></script>
+    <include file="admin_category/select2" />
+
+    <script type="text/javascript">
+        function lothar_plus(o) {
+            var pid = $(o).attr('data-id');
+            var type = $(o).attr('data-type');
+            // 获取当前点击 tr 的下标  
+            // let index = $(o).parents('tr').index() + 1;  
+            // console.log(index); 
+
+            // alert(pid)
+            // alert(type)
+            $.ajax({
+                url:"{:url('ajaxTable')}",
+                type: 'GET',
+                // dataType: 'JSON',
+                data: {pid:pid,type:type},
+                success:function (data) {
+                    console.log(data)
+                    var subset = '';
+                    if (data === undefined || data.length == 0) {
+                        subset = '<tr><td>--</td><td>--</td><td>--</td><td>暂无子级数据……</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td><a class="fa fa-times"></a></td></tr>';
+                    } else {
+                        for (var i = data.length - 1; i >= 0; i--) {
+                            subset = subset + 
+                                '<tr>'
+                                +   '<td><input type="text" name="list_orders['+data[i].id+']" value="'+data[i].list_order+'" size="3" class="input-order"></td>'
+                                +   '<td>'+data[i].id+'</td>'
+                                +   '<td>'+(data[i].type?'物品分类':'游戏')+'</td>'
+                                +   '<td>&nbsp;&nbsp;├─<a>'+data[i].name+'</a></td>'
+                                +   '<td>'+data[i].code+'</td>'
+                                +   '<td>'+data[i].gindex+'</td>'
+                                +   '<td>'+data[i].unit+'</td>'
+                                +   '<td>--</td>'
+                                +   '<td>'
+                                    +(data[i].is_hot?'<a data-toggle="tooltip" title="已推荐"><i class="fa fa-thumbs-up"></i></a>':'<a style="color:#CCC" data-toggle="tooltip" title="未推荐"><i class="fa fa-thumbs-down"></i></a>')
+                                    +(data[i].status?'<a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>':'<a style="color:#F00" data-toggle="tooltip" title="隐藏"><i class="fa fa-close"></i></a>')
+                                +   '</td>'
+                                +   '<td><a class="fa fa-times"></a></td>'
+                                +'</tr>';
+                        }
+                    }
+                    // $(o).removeClass('fa-plus-square').addClass('fa-minus-square');
+                    $(o).css('display','none');
+                    $(o).siblings('i').css('display','inline-block');
+                    $(o).parents('tr').after(subset);
+                }
+            });
+
+            // var lastkey = $('#last_gs_key').attr('data_id');
+            // var subset ='<tr>'
+            //     +    '<td><input name="list_orders[]" type="text" size="3" value="" class="input-order"></td>'
+            //     +    '<td>[id]</td>'
+            //     +    '<td>[type]</td>'
+            //     +    '<td>&nbsp;&nbsp;├─<a><input name="cate[name]" value="[name]"></a></td>'
+            //     +    '<td>[code]</td>'
+            //     +    '<td>[gindex]</td>'
+            //     +    '<td>[unit]</td>'
+            //     +    '<td>--</td>'
+            //     +    '<td> </td>'
+            //     +    '<td> <a class="fa fa-times"></a> </td>'
+            //     +'</tr>';
+            // console.log(subset)
+            // $(o).parents('tr').after(subset);
+            // $(this).siblings('table').find('tbody ').append(subset);
+            // $('#last_gs_key').attr('data_id',parseInt(lastkey)+1);
+        }
+
+        function lothar_minus(o) {
+            // $(o).css('display','inline-block');
+            // $(o).siblings('i').hide();
+            // $(o).parents('tr').siblings('tr').hide();
+        }
+
+        // 删除按钮
+        // $('tbody').on('click','.btn-reduce',function(){
+        //     $(this).parents('tr').remove();
+        // })
+
+
+
+        // $('.fa-minus-square').click(function() {
+        //     $("ul>li").not(":eq(0)").remove();
+        //     // $("ul>li").not(":first").remove();
+        // });
+
+        // $('.fa-times').click(function() {
+        //     alert('as')
+        //     $('tbody tr').each(function(){
+        //         $(this).parents('tr').remove();
+        //     });
+        // });
+        // $('.fa-times').on('click', '.selector', function(event) {
+        //     $('tbody tr').each(function(){ $(this).remove(); });
+        // });
+    </script>
+</body>
+</html>

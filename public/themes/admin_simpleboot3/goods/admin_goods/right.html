@@ -1,0 +1,59 @@
+<table class="table table-bordered">
+    <tr>
+        <th>主题图</th>
+        <td>
+            <input type="hidden" name="goods[thumbnail]" id="thumbnail" value="{$goods.thumbnail|default=''}">
+            <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                <empty name="goods.thumbnail">
+                    <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" style="width:135px;cursor:pointer" />
+                <else/>
+                    <img src="{:cmf_get_image_preview_url($goods.thumbnail)}" id="thumbnail-preview" style="width:135px;cursor:pointer" />
+                </empty>
+            </a>
+            <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+        </td>
+    </tr>
+    <tr>
+        <th width="80"><b>查看次数</b></th>
+        <td><a href="#">{$goods.views|default='--'}</a></td>
+    </tr>
+    <tr>
+        <th><b>销量</b></th>
+        <td>
+            <p>{$goods.sales|default='--'}</p>
+        </td>
+    </tr>
+    <tr>
+        <th><b>评论数</b></th>
+        <td>
+            <p>{$goods.comments|default='--'}</p>
+        </td>
+    </tr>
+    <tr>
+        <th>上架时间</th>
+        <td>
+            <p class="form-control">{$goods.up_time?date('Y-m-d H:s',$goods.up_time):'--'}</p>
+        </td>
+    </tr>
+    <tr>
+        <th>下架时间</th>
+        <td>
+            <p class="form-control">{$goods.down_time?date('Y-m-d H:s',$goods.down_time):'--'}</p>
+        </td>
+    </tr>
+    <tr>
+        <th>排序</th>
+        <td>
+            <input type="number" name="goods[list_order]" value="{$goods.list_order|default='10000'}" placeholder="" class="form-control" />
+            <p class="help-block" style="font-size:12px;box-shadow: 4px 5px 1px 1px orange;">推荐值（置顶或排序用），从小到大，默认10000</p>
+        </td>
+    </tr>
+    <tr>
+        <th>状态</th>
+        <td>
+            <select name="goods[status]" class="form-control">
+                {$statusV|default=''}
+            </select>
+        </td>
+    </tr>
+</table>

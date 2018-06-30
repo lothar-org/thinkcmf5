@@ -1,0 +1,49 @@
+<table class="table table-bposted">
+    <tr>
+        <th><b>头像</b></th>
+        <td>
+            <input type="hidden" name="post[avatar]" value="{$post.avatar|default=''}" id="thumbnail">
+            <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                <if condition="empty($post.avatar)">
+                    <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" width="64" style="cursor: pointer" />
+                    <else/>
+                    <img src="{:cmf_get_image_preview_url($post.avatar)}" id="thumbnail-preview" width="64" style="cursor: pointer" />
+                </if>
+            </a>
+            <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消">
+        </td>
+    </tr>
+    <tr>
+        <th width="80"><b>用户</b></th>
+        <td>
+            <p class="help-block">
+                用户类型： 
+                <select name="type" class="form-control">{$types|default=''}</select>
+            </p>
+            <p class="help-block">用户编号： {$post.member_sku|default=''}</p>
+        </td>
+    </tr>
+    <tr>
+        <th><b>注册</b></th>
+        <td>
+            <p class="help-block">注册时间： {$post.reg_time?date('Y-m-d H:i:s',$post.reg_time):''}</p>
+            <p class="help-block">注册IP： {$post.reg_ip|default=''}</p>
+        </td>
+    </tr>
+    <tr>
+        <th>登录</th>
+        <td>
+            <p class="help-block">登录时间： {$post.login_time?date('Y-m-d H:i:s',$post.login_time):''}</p>
+            <p class="help-block">登录IP： {$post.login_ip|default=''}</p>
+        </td>
+    </tr>
+
+    <tr>
+        <th>状态</th>
+        <td>
+            <select name="post[status]" class="form-control">
+                {$statusV|default=''}
+            </select>
+        </td>
+    </tr>
+</table>

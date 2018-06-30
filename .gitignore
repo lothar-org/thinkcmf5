@@ -1,0 +1,37 @@
+.buildpath
+.DS_Store
+.project
+.settings
+.idea
+/api
+
+#app
+/app/install
+
+#data
+# /data/
+# !/data/install.lock
+# !/data/conf/config.php
+# !/data/conf/database.php
+# !/data/lang/
+#data
+/data/
+!/data/install.lock
+!/data/conf/
+/data/conf/route.php
+!/data/lang/
+
+#public
+/public/api
+/public/assets/dist
+/public/themes/simpleboot3
+/public/upload/
+!/public/upload/.htaccess
+/public/data/
+!/public/data/index.html
+/public/log/
+!/public/log/index.html
+
+#other
+/node_modules
+*.zip

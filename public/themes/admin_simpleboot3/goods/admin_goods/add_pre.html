@@ -1,0 +1,65 @@
+<include file="public@header" />
+<style type="text/css">
+    .syct{float:left;margin-right:8px;}
+    .iblock{display:inline-block;}
+</style>
+</head>
+
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('index')}">{$flag}管理</a></li>
+            <!-- <li class="active"><a href="javascript:void(0);">添加{$flag}</a></li> -->
+            <li class="active"><a href="javascript:void(0);">测试</a></li>
+        </ul>
+
+        <div class="row margin-top-20">
+        <form action="{:url('add')}" method="post" class="form-horizontal " id="addPre">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>初始操作</th>
+                        <td>
+                            <!-- 条件筛选 -->
+                            <div class="syct">
+                                <span>类型：</span>
+                                <select name="type0" id="lot-type0" class="form-control iblock" style="width:120px;height:28px;border:1px solid #aaa;border-radius:4px;">
+                                    {$types|default=''}
+                                </select>
+                            </div>
+                            <php>$category_type='null';</php>
+                            <include file="admin_category/linkage" />
+                            <div class="clearfix"></div>
+                            <p class="help-block">拆分为联动或者使用带筛选的选择框插件，比如select2。</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" id="next-step">下一步</button>
+                    <a class="btn btn-default" href="{:url('index')}">{:lang('BACK')}</a>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+    <include file="admin_category/select2" />
+    <script type="text/javascript">
+        $('#next-step').click(function() {
+            var op = $('form').serialize();
+            // var op = $('#addPre').serialize();
+            // alert(op);// type0=1&type=0&gameId=2&second=6&third=9
+
+            // url = '{:url("add", '', false, true)}';// http://tx.c2c/goods/admin_goods/add
+            // url = '{:url("add")}';// /goods/admin_goods/add.html
+            var url = '{:url("add", \'\', false)}';// /goods/admin_goods/add
+            // alert(url)
+            
+            location.href = url+'/'+op;
+        });
+    </script>
+</body>
+
+</html>

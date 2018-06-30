@@ -1,0 +1,41 @@
+<table class="table table-bordered">
+    <tr>
+        <th width="100">广告位</th>
+        <td>
+            <p class="form-control" id="view-adv">查看广告位</p>
+            <empty name="code">
+                <a href="{:url('admin/Slide/add',['gid'=>$gameId])}" target="_blank"> 去添加广告位 >> </a>
+                <else/>
+                <a href="{:url('admin/Slide/index',['slideId'=>$post.slide_id])}" target="_blank"> 去编辑广告位 >> </a>
+            </empty>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $('#view-adv').click(function() {
+        var type = $('#lot-type').val();
+        alert(type);
+
+        // 改变code值
+        $.ajax({
+            url: '{:url("ajaxAdv")}',
+            // type: 'default GET (Other values: POST)',
+            // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+            data: {t: type},
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+        // 改变广告值
+        // $(this).parent.openIframeDialog("{:url('admin/Slide/index')}",'管理广告',{width:'600px',height:'400px'});
+        // $(this).parent.openIframeLayer("{:url('admin/Slide/index')}",'管理广告',{});
+        // window.open('{:url('admin/Slide/index')}', '管理广告');
+    });
+</script>

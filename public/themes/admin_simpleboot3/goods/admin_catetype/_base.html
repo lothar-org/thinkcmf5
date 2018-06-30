@@ -1,0 +1,161 @@
+<table class="table table-bordered">
+    <tr>
+        <empty name="gameId">
+            <th>游戏</th>
+            <td>
+                <select name="post[game_id]" id="lot-game" class="form-control" style="width:300px;">
+                    <option value="">--请选择--</option>
+                    <foreach name="games" item="g">
+                        <option {$gameId==$g.id?='selected' } value="{$g.id}">{$g.name}</option>
+                    </foreach>
+                </select>
+            </td>
+        <else/>
+            <th>游戏名</th>
+            <td>
+                <p class="form-control">
+                    {$gameloft.name|default=''}
+                </p>
+                <input type="hidden" name="post[game_id]" value="{$gameId|default='0'}" id="lot-game">
+            </td>
+        </empty>
+        <th>产品类型</th>
+        <td>
+            <select name="post[type_id]" id="lot-type" class="form-control" style="width:300px;">
+                {$types|default=''}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th width="100"><code>CODE码</code><span class="form-required">*</span></th>
+        <td>
+            <input type="text" name="post[code]" value="{$post.code?$post.code:$codeloft}" placeholder="" required class="form-control" id="lot-code">
+            <p class="help-block">
+                URL美化、SEO。只能是字母和数字，下划线_及破折号-
+                <br>如果未填写，则系统按一定规则自动生成。
+            </p>
+        </td>
+        <th width="100">类型别名</th>
+        <td>
+            <input type="text" name="post[cname]" value="{$post.cname|default=''}" placeholder="请输入类型名称" class="form-control" />
+            <p class="help-block">类型别名，重新定义类型名称</p>
+        </td>
+    </tr>
+</table>
+<table class="table table-bordered">
+    <tr>
+        <th width="100">面包屑导航</th>
+        <td>
+            <input type="text" name="post[crumbs]" value="{$post.crumbs|default=''}" placeholder="请输入类型名称" class="form-control" />
+            <p class="help-block">自定义面包屑导航</p>
+        </td>
+    </tr>
+    <tr>
+        <th>列表标题<span class="form-required">*</span></th>
+        <td>
+            <input type="text" name="post[title]" value="{$post.title|default=''}" placeholder="请输入类型名称" required class="form-control" />
+            <p class="help-block">显示在游戏列表页的标题。</p>
+        </td>
+    </tr>
+    <tr>
+        <th>游戏简介</th>
+        <td>
+            <textarea rows="3" class="form-control" placeholder="" name="post[brief]">{$post.brief|default=''}</textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>游戏交易信息</th>
+        <td>
+            <script type="text/plain" id="trade_info" name="post[trade_info]">{$post.trade_info|default=''}</script>
+        </td>
+    </tr>
+    <tr>
+        <th>游戏详述</th>
+        <td>
+            <script type="text/plain" id="content" name="post[content]">{$post.content|default=''}</script>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+//编辑器路径定义
+var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/js/select2/select2.min.css">
+<script type="text/javascript" src="__STATIC__/js/select2/select2.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    /*trade_info*/
+    editorcontent = new baidu.editor.ui.Editor({
+        toolbars: [
+            ['source', 'undo', 'redo', 'bold', 'italic', 'strikethrough', 'superscript', 'subscript', '|', 'fontfamily', 'fontsize', 'pasteplain', 'forecolor', 'backcolor', 'date', 'time'],
+            ['simpleupload', 'insertimage', 'music', 'insertvideo', 'attachment', 'emotion', 'spechars', 'snapscreen', 'scrawl', '|', 'wordimage', 'map', 'inserttable', 'charts']
+        ],
+        // initialFrameWidth:796,          //初始化编辑器宽度,默认1000
+        initialFrameHeight: 150, //初始化编辑器高度,默认320
+        autoHeightEnabled: true, //自动长高
+        indentValue: '2em', //首行缩进距离
+        wordCount: true, //是否开启字数统计
+        maximumWords: 5000, //允许的最大字符数
+    });
+    // editorcontent = new baidu.editor.ui.Editor();
+    editorcontent.render('trade_info');
+
+    /*content*/
+    editorcontent = new baidu.editor.ui.Editor();
+    editorcontent.render('content');
+    try {
+        editorcontent.sync();
+    } catch (err) {}
+
+    /*thumbnail*/
+    $('.btn-cancel-thumbnail').click(function() {
+        $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail').val('');
+    });
+
+
+    var json = {
+        placeholder: '--请选择--',
+        language: "zh-CN",
+        allowClear: true,
+        minimumResultsForSearch: 10,
+    };
+    /*游戏变换*/
+    var gameId = '{$gameId}';
+    if (!gameId) {
+        $('#lot-game').select2(json);
+    }
+
+    /*CODE变换*/
+
+    // 可以用on合并事件
+    $('#lot-game,#lot-type').on('change', function() {
+        var g = $('#lot-game').val(),
+            t = $('#lot-type').val();
+        game_type(g, t);
+    });
+
+
+    function game_type(game, type) {
+        $.ajax({
+                url: '{:url("ajaxGt")}',
+                type: 'GET',
+                // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+                data: { g: game, t: type },
+            })
+            .done(function(dao) {
+                $('#lot-code').val(dao);
+            })
+            .fail(function() {
+                $('#lot-code').val('请求失败！');
+            })
+            .always(function() {
+                // $('#lot-code').after('完成请求');
+            });
+    }
+
+
+});
+</script>

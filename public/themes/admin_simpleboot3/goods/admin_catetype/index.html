@@ -1,0 +1,71 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>{$flag}管理</a></li>
+        <li><a href="{:url('add',['gameId'=>$gameId])}">添加{$flag}</a></li>
+    </ul>
+    <empty name="gameId">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+        游戏：
+        <select name="gameId" class="form-control" style="width:200px;">
+            <option value="">-- 全部 --</option>
+            <foreach name="games" item="g">
+                <option {$gameId==$g.id?='selected'} value="{$g.id}">{$g.name}</option>
+            </foreach>
+        </select> &nbsp; &nbsp;
+        关键词：
+        <input class="form-control" type="text" name="keyword" style="width:200px;" value="{:input('request.keyword')}"
+               placeholder="CODE/标题/别名">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+    </form>
+    <else/>
+    <p class="well form-inline" style="padding:5px;margin:5px 0px;">
+        游戏： <a href="{:url('AdminCategory/index')}">{$gameloft.name}</a>
+    </p>
+    </empty>
+
+    <form method="post" class="js-ajax-form" action="{:url('listOrder')}">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>游戏ID</th>
+                <th>类型ID</th>
+                <th>列表标题</th>
+                <th>CODE码</th>
+                <th>类型别名</th>
+                <th>查看数</th>
+                <th>产品数</th>
+                <th>{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>【{$vo.game_id}】{$vo.game_name}</td>
+                    <td>【{$vo.type_id}】{$vo.type_name}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.code}</td>
+                    <td>{$vo.cname}</td>
+                    <td>{$vo.views}</td>
+                    <td>{$vo.count}</td>
+                    <td>
+                        <a href="{:url('edit',['id'=>$vo.id,'gameId'=>$gameId])}">{:lang('EDIT')}</a> &nbsp; &nbsp;
+                        <a href="{:url('delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a> &nbsp; &nbsp;
+                        <a href="javascript:parent.openIframeLayer('{:url('admin/Slide/index',['slideId'=>$vo.slide_id])}','管理 {$vo.game_name} 广告',{});" target="">修改广告</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$pager|default=''}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
